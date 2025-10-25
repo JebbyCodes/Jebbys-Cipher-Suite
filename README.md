@@ -6,3 +6,6 @@ A suite of Python files created for the National Cipher Challenge 2025
 
 ## How to Run:
 - Just run `main.py`!
+
+<br><br><br><br><br><br><br><br>
+![Signature](./res/Harrys-signature-reversed.png)
