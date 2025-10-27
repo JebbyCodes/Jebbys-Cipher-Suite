@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from Scripts import AtBash_de
+from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de
 
 # Get root directory
 rootdir = os.path.dirname(__file__)
@@ -35,11 +35,15 @@ def init(Exitable=False):
 
         # Main Buttons #
         btn_hello = tk.Button(root, text="Help", command=help)
-        btn_atbash = tk.Button(root, text="AtBash Solver (de)", command=lambda: AtBash_de.main())
+        btn_atbash = tk.Button(root, text="AtBash Solver", command=lambda: AtBash_de.main())
+        btn_caeser = tk.Button(root, text="Caeser Cipher Solver", command=lambda: caeser_cipher_de.main())
+        btn_hexoctbin = tk.Button(root, text="Hex/Oct/Bin Decoder", command=lambda: hex_oct_bin_de.main())
 
         # Main Pack #
         btn_hello.pack(pady=10)
         btn_atbash.pack(pady=10)
+        btn_caeser.pack(pady=10)
+        btn_hexoctbin.pack(pady=10)
 
         # ~~ END MAIN ~~ ~~ END MAIN ~~  ~~ END MAIN ~~  ~~ END MAIN ~~
 
