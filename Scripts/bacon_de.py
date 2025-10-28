@@ -1,5 +1,5 @@
 def main():
-    text  = str(input(">> ")).lower().split(" ")
+    text  = str(input("$bacon_de >>> ")).lower().split(" ")
     cipher(text)
 
 def cipher(text):
@@ -18,5 +18,4 @@ def cipher(text):
     print(plaintext)
 
 if __name__ == "__main__":
-
     main()

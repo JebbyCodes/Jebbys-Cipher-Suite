@@ -1,6 +1,6 @@
 def main():
     # add text into the string litteral below
-    text = input(">>> ")
+    text = input("$AtBash_de >>> ")
 
     def cipher(text):
         result = ""

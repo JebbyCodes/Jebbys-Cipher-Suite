@@ -2,13 +2,23 @@
 
 from wordfreq import top_n_list
 
-def substitutiondecode(text):
+def main():
+
+    # create blank letter mapping
     mapping = {}
     for i in range(26):
         letter = chr(ord("A") + i)
         mapping[letter] = ""
 
 
+
+    #with open("text.txt", "r", encoding="utf-8", errors="replace") as file:
+        #text = file.readline().strip()
+
+    text = str(input("$substitution_de >>> "))
+    text = text.strip()
+    text = text.upper()
+        
     newtext = ""   
     for letter in text:
         if letter.isalpha() or letter == " ":
@@ -157,18 +167,17 @@ def substitutiondecode(text):
         mapping["N"] = ""
         mapping["M"] = then[1]
 
-        if checkmapping(wordlist, mapping) == True:
-            pass
-        else:
-            mapping["M"] = ""
-            mapping["Y"] = then[1]
 
-    return decode(text, mapping)
 
+    
+
+                
+    print(decode(text, mapping))
 
 
 
-
+if __name__ == "__main__":
+    main()  # only runs if you execute this file directly
 
 
 
