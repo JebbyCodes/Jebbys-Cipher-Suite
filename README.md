@@ -1,4 +1,4 @@
-# Jebbys-Cipher-Suite
+# Jebby's Cipher Suite
 A suite of Python files created for the [National Cipher Challenge 2025](https://www.cipherchallenge.org/)
 
 ## Core Functionality:
