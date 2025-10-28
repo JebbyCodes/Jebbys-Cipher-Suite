@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import ttk
+import customtkinter as ctk
 
 def main():
     # Constants #
@@ -15,7 +16,7 @@ def main():
         "entered_ciphertext": False
     }
 
-    root = tk.Tk()
+    root = ctk.CTk()
     root.title("Verfication Suite")
     root.geometry("750x750")
 
@@ -28,7 +29,7 @@ def main():
     # Init Function (to main) #
     def init(Exitable=False):
         if Exitable:
-            btn_exit = tk.Button(root, text="Exit", command=init)
+            btn_exit = ctk.CTkButton(root, text="Exit", command=init)
             btn_exit.pack(pady=10)
             Exitable = False
         else:
@@ -36,7 +37,7 @@ def main():
             def enter_plaintext():
                 state["plaintext"] = entry_plaintext.get("1.0", tk.END).strip()
                 state["entered_plaintext"] = True
-                btn_plaintext.config(text="✅ PLAINTEXT ENTERED")
+                btn_plaintext.configure(text="✅ PLAINTEXT ENTERED")
                 if state["entered_plaintext"] and state["entered_ciphertext"]:
                     tools()
                 #print(plaintext)
@@ -44,7 +45,7 @@ def main():
             def enter_ciphertext():
                 state["ciphertext"] = entry_ciphertext.get("1.0", tk.END).strip()
                 state["entered_ciphertext"] = True
-                btn_ciphertext.config(text="✅ CIPHERTEXT ENTERED")
+                btn_ciphertext.configure(text="✅ CIPHERTEXT ENTERED")
                 if state["entered_plaintext"] and state["entered_ciphertext"]:
                     tools()
                 #print(ciphertext)
@@ -69,24 +70,24 @@ def main():
                     else:
                         print("Lengths Do Not Match!")
 
-                btn_lowercase = tk.Button(root, text=".lower()", command=lambda: lowercase())
+                btn_lowercase = ctk.CTkButton(root, text=".lower()", command=lambda: lowercase())
                 btn_lowercase.pack(pady=10)
 
-                btn_uppercase = tk.Button(root, text=".upper()", command=lambda: uppercase())
+                btn_uppercase = ctk.CTkButton(root, text=".upper()", command=lambda: uppercase())
                 btn_uppercase.pack(pady=10)
 
-                btn_lencheck = tk.Button(root, text="Length Check", command=lambda: lencheck())
+                btn_lencheck = ctk.CTkButton(root, text="Length Check", command=lambda: lencheck())
                 btn_lencheck.pack(pady=10)
                 #   #
 
             clear()
             # ~~ MAIN ~~ ~~ MAIN ~~  ~~ MAIN ~~  ~~ MAIN ~~  ~~ MAIN ~~  ~~ MAIN ~~ 
 
-            entry_plaintext = tk.Text(root, height=15)
-            btn_plaintext = tk.Button(root, text="ENTER PLAINTEXT", command=enter_plaintext)
+            entry_plaintext = ctk.CTkTextbox(root, height=200, width=725)
+            btn_plaintext = ctk.CTkButton(root, text="ENTER PLAINTEXT", command=enter_plaintext)
 
-            entry_ciphertext = tk.Text(root, height=15)
-            btn_ciphertext = tk.Button(root, text="ENTER CIPHERTEXT", command=enter_ciphertext)
+            entry_ciphertext = ctk.CTkTextbox(root, height=200, width=725)
+            btn_ciphertext = ctk.CTkButton(root, text="ENTER CIPHERTEXT", command=enter_ciphertext)
 
             # MAIN PACK #
             entry_plaintext.pack(padx=10, pady=10, expand=False)
