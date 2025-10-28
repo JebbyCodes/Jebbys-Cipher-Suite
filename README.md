@@ -1,5 +1,5 @@
 # Jebbys-Cipher-Suite
-A suite of Python files created for the National Cipher Challenge 2025
+A suite of Python files created for the [National Cipher Challenge 2025](https://www.cipherchallenge.org/)
 
 ## Core Functionality:
 - Jebby's Cipher Suite aims to congregate Jebby's Jailbreak V2's python scripts into a unified GUI for deciphering.
