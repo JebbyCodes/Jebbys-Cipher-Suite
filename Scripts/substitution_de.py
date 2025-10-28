@@ -2,23 +2,31 @@
 
 from wordfreq import top_n_list
 
-def main():
 
-    # create blank letter mapping
+# function to decode text using current mapping
+def decode(text, mapping):
+    decoded = ""
+    reversedmapping = {v: k for k, v in mapping.items() if v != ""}
+    
+    for letter in text:
+        if letter.isalpha():
+            if letter in reversedmapping:
+                decoded += reversedmapping[letter]
+            else:
+                decoded += "_"
+        else:
+            decoded += letter
+            
+    return decoded
+
+
+def substitutiondecode(text):
     mapping = {}
     for i in range(26):
         letter = chr(ord("A") + i)
         mapping[letter] = ""
 
 
-
-    #with open("text.txt", "r", encoding="utf-8", errors="replace") as file:
-        #text = file.readline().strip()
-
-    text = str(input("$substitution_de >>> "))
-    text = text.strip()
-    text = text.upper()
-        
     newtext = ""   
     for letter in text:
         if letter.isalpha() or letter == " ":
@@ -48,21 +56,7 @@ def main():
         return False
 
 
-    # function to decode text using current mapping
-    def decode(text, mapping):
-        decoded = ""
-        reversedmapping = {v: k for k, v in mapping.items() if v != ""}
-        
-        for letter in text:
-            if letter.isalpha():
-                if letter in reversedmapping:
-                    decoded += reversedmapping[letter]
-                else:
-                    decoded += "_"
-            else:
-                decoded += letter
-                
-        return decoded
+    
 
         
 
@@ -71,11 +65,15 @@ def main():
     # ^^^^^ SOLUTION
 
     def checkmapping(wordlist, mapping):
+        count = 0
         for word in wordlist:
             if ispossible(decode(word, mapping)) == False:
-                return False
-
-        return True
+                count += 1
+        
+        if count == 0:
+            return True
+        
+        return False
             
     # determine the most common word (almost certainly "the")
     def mostcommon(wordlist, pattern):
@@ -164,20 +162,22 @@ def main():
             mapping["M"] = asvar[1]
 
     else:
+        #print("ive gone to here")
         mapping["N"] = ""
-        mapping["M"] = then[1]
+        mapping["M"] = then[3]
+
+        if checkmapping(wordlist, mapping) == True:
+            pass
+        else:
+            mapping["M"] = ""
+            mapping["Y"] = then[3]
+
+    return [decode(text, mapping), mapping]
 
 
 
-    
-
-                
-    print(decode(text, mapping))
 
 
-
-if __name__ == "__main__":
-    main()  # only runs if you execute this file directly
 
 
 
