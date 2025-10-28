@@ -122,6 +122,9 @@ def updateplaintext(event):
           plaintextwidget.insert(tk.END, decode(ciphertextwidget.get("1.0", tk.END), mapping))
           plaintextwidget.config(state="disabled")
 
+          ciphertextwidget.yview_moveto(0.0)
+          plaintextwidget.yview_moveto(0.0)
+
 
 
 root = tk.Tk()
