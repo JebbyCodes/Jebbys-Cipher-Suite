@@ -1,6 +1,6 @@
 from substitution_de import substitutiondecode, decode
 import tkinter as tk
-import threading
+import threading, string
 from tkinter import ttk
 
 
@@ -25,8 +25,8 @@ def decodethread():
 
 
           except Exception as e:
-                  plaintextwidget.config(foreground="red")
-                  text = f"SOMETHING WENT WRONG:\n{e}"
+                  emptymapping = {letter: "" for letter in string.ascii_uppercase}
+                  text = decode(ciphertextwidget.get("1.0", tk.END), emptymapping)
 
           plaintextwidget.config(state="normal")
           plaintextwidget.delete("1.0", tk.END)
