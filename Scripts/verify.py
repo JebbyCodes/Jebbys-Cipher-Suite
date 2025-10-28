@@ -63,11 +63,20 @@ def main():
                     entry_plaintext.insert("1.0", state["plaintext"].upper())
                     entry_ciphertext.insert("1.0", state["ciphertext"].upper())
 
+                def lencheck():
+                    if len(state["plaintext"]) == len(state["ciphertext"]):
+                        print("Lengths Match!")
+                    else:
+                        print("Lengths Do Not Match!")
+
                 btn_lowercase = tk.Button(root, text=".lower()", command=lambda: lowercase())
                 btn_lowercase.pack(pady=10)
 
                 btn_uppercase = tk.Button(root, text=".upper()", command=lambda: uppercase())
                 btn_uppercase.pack(pady=10)
+
+                btn_lencheck = tk.Button(root, text="Length Check", command=lambda: lencheck())
+                btn_lencheck.pack(pady=10)
                 #   #
 
             clear()
