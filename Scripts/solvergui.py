@@ -24,9 +24,17 @@ def decodethread():
                                         entries[index].insert(0, mapping[labeltext]) 
 
 
-          except Exception as e:
+          except:
                   emptymapping = {letter: "" for letter in string.ascii_uppercase}
                   text = decode(ciphertextwidget.get("1.0", tk.END), emptymapping)
+
+                  for label in labels:
+                              labeltext = label.cget("text") 
+                              if labeltext in emptymapping:
+                                        index = labels.index(label)
+
+                                        entries[index].delete(0, tk.END) 
+                                        entries[index].insert(0, emptymapping[labeltext]) 
 
           plaintextwidget.config(state="normal")
           plaintextwidget.delete("1.0", tk.END)
