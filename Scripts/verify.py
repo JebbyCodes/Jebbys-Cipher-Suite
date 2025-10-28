@@ -36,6 +36,7 @@ def main():
             def enter_plaintext():
                 state["plaintext"] = entry_plaintext.get("1.0", tk.END).strip()
                 state["entered_plaintext"] = True
+                btn_plaintext.config(text="✅ PLAINTEXT ENTERED")
                 if state["entered_plaintext"] and state["entered_ciphertext"]:
                     tools()
                 #print(plaintext)
@@ -43,6 +44,7 @@ def main():
             def enter_ciphertext():
                 state["ciphertext"] = entry_ciphertext.get("1.0", tk.END).strip()
                 state["entered_ciphertext"] = True
+                btn_ciphertext.config(text="✅ CIPHERTEXT ENTERED")
                 if state["entered_plaintext"] and state["entered_ciphertext"]:
                     tools()
                 #print(ciphertext)
@@ -55,8 +57,17 @@ def main():
                     entry_plaintext.insert("1.0", state["plaintext"].lower())
                     entry_ciphertext.insert("1.0", state["ciphertext"].lower())
 
-                btn_lowercase = tk.Button(root, text="Lowercase Tool", command=lambda: lowercase())
+                def uppercase():
+                    entry_plaintext.delete("1.0", tk.END)
+                    entry_ciphertext.delete("1.0", tk.END)
+                    entry_plaintext.insert("1.0", state["plaintext"].upper())
+                    entry_ciphertext.insert("1.0", state["ciphertext"].upper())
+
+                btn_lowercase = tk.Button(root, text=".lower()", command=lambda: lowercase())
                 btn_lowercase.pack(pady=10)
+
+                btn_uppercase = tk.Button(root, text=".upper()", command=lambda: uppercase())
+                btn_uppercase.pack(pady=10)
                 #   #
 
             clear()
