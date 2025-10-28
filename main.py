@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 import wordfreq
-from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, substitution_de
+from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, substitution_de, affine_de, verify
 
 # Constants #
 VERSION = "1.0"
@@ -52,8 +52,10 @@ def init(Exitable=False):
         btn_hexoctbin = tk.Button(root, text="Hex/Oct/Bin Decoder", command=lambda: hex_oct_bin_de.main())
         btn_bacon = tk.Button(root, text="Bacon Cipher Solver", command=lambda: bacon_de.main())
         btn_substitution = tk.Button(root, text="Substitution Cipher Solver", command=lambda: substitution_de.main())
+        btn_affine = tk.Button(root, text="Affine Cipher Solver", command=lambda: affine_de.main())
 
         # Main Buttons BOTTOM #
+        btn_verify = tk.Button(root, text="Verify", command=lambda: verify.main())
         btn_credits = tk.Button(root, text="Credits", command=credits)
 
         # Main Pack #
@@ -63,7 +65,9 @@ def init(Exitable=False):
         btn_hexoctbin.pack(pady=10)
         btn_bacon.pack(pady=10)
         btn_substitution.pack(pady=10)
+        btn_affine.pack(pady=10)
 
+        btn_verify.pack(pady=10)
         btn_credits.pack(pady=10)
 
         # ~~ END MAIN ~~ ~~ END MAIN ~~  ~~ END MAIN ~~  ~~ END MAIN ~~
