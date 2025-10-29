@@ -14,7 +14,7 @@ credits_filler = "\n********************************************************\n\n
 
 root = ctk.CTk()
 root.title("Jebby's Cipher Suite")
-root.geometry("250x700")
+root.geometry("400x700")
 root.iconbitmap(os.path.join(rootdir, "res", "favicon.ico"))
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
@@ -152,6 +152,7 @@ def init(Exitable=False):
         btn_freqanalyse = ctk.CTkButton(frame_main, text="Frequency Analyser", command=lambda: frequency_analyser.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_vigenere = ctk.CTkButton(frame_main, text="Vigenère Cipher Solver",command=lambda: vigenere_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_vigenere._text_label.configure(wraplength = root.winfo_width())
 
         btn_verify = ctk.CTkButton(frame_main, text="Verify", command=lambda: verify.main(), width=200, height=100, fg_color="#3EC385", hover_color="#29845D", font=ctk.CTkFont(size=16, weight="bold"))
         
