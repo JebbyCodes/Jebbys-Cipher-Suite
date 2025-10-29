@@ -1,4 +1,4 @@
-# <img src="./res/icon%20512x512.png" width="48" height="48" alt="Signature"> Jebby's Cipher Suite
+# <img src="./res/icon%20512x512.png" width="48" height="48"> Jebby's Cipher Suite
 A suite of Python files created for the [National Cipher Challenge 2025](https://www.cipherchallenge.org/)
 
 ## Core Functionality:
