@@ -7,9 +7,12 @@ def main():
 
         for i in range(len(text)):
             char = text[i]
-            index1 = alpha.index(char)
-            alpha.reverse()
-            result += alpha[index1]
+            if char not in alpha:
+                continue
+            else:
+                index1 = alpha.index(char)
+                alpha.reverse()
+                result += alpha[index1]
 
 
         return result
@@ -18,10 +21,11 @@ def main():
             "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
 
 
-    print(cipher(text))
+    print(cipher(text).upper())
 
 if __name__ == "__main__":
     main()  # only runs if you execute this file directly
+
 
 
 
