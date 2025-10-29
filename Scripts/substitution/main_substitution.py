@@ -144,14 +144,14 @@ def main():
     ctk.CTkLabel(textframe, text="Ciphertext").grid(row=0, column=0, pady=5)
     ciphertextframe = ctk.CTkFrame(textframe)
     ciphertextframe.grid(row=1, column=0, padx=(10, 7))
-    ciphertextwidget = ctk.CTkTextbox(ciphertextframe, width=500, height=250, wrap="word")
+    ciphertextwidget = ctk.CTkTextbox(ciphertextframe, width=500, height=250, wrap="word", font=("Courier New", 12))
     ciphertextwidget.pack(side=ctk.LEFT, fill=ctk.BOTH, expand=True)
 
     # Plaintext
     ctk.CTkLabel(textframe, text="Plaintext").grid(row=0, column=1, pady=5)
     plaintextframe = ctk.CTkFrame(textframe)
     plaintextframe.grid(row=1, column=1, padx=(7, 10))
-    plaintextwidget = ctk.CTkTextbox(plaintextframe, width=500, height=250, wrap="word", state="disabled")
+    plaintextwidget = ctk.CTkTextbox(plaintextframe, width=500, height=250, wrap="word", state="disabled", font=("Courier New", 12))
     plaintextwidget.pack(side=ctk.LEFT, fill=ctk.BOTH, expand=True)
 
     # Shared scrollbar
@@ -178,11 +178,11 @@ def main():
     gridframe.pack(pady=10)
 
     for i, letter in enumerate(string.ascii_uppercase):
-        label = ctk.CTkLabel(gridframe, text=letter, width=25)
+        label = ctk.CTkLabel(gridframe, text=letter, width=40)
         label.grid(row=1, column=i, padx=1)
         labels.append(label)
 
-        entry = ctk.CTkEntry(gridframe, width=25, justify="center")
+        entry = ctk.CTkEntry(gridframe, width=40, justify="center")
         entry.grid(row=0, column=i, padx=1, pady=(0, 3))
         entry.bind("<KeyRelease>", lambda e, idx=i: updateplaintext(idx))
         entries.append(entry)
