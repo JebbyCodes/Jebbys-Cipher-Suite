@@ -1,7 +1,7 @@
 import os
 import sys
 import customtkinter as ctk
-from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de
+from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
 from Scripts.substitution import main_substitution
@@ -137,7 +137,7 @@ def init(Exitable=False):
 
         btn_credits = ctk.CTkButton(frame_main, text="Credits", command=credits, width=50, height=25)
 
-        btn_atbash = ctk.CTkButton(frame_main, text="AtBash Solver", command=lambda: AtBash_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_atbash = ctk.CTkButton(frame_main, text="AtBash Solver", command=lambda: atBash_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_caeser = ctk.CTkButton(frame_main, text="Caeser Cipher Solver", command=lambda: caeser_cipher_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
