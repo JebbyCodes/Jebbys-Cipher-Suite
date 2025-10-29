@@ -12,7 +12,6 @@ def main():
                     result += char
             print(result)
 
-    text = """HELLO""".lower()
     cipher(text)
 
 if __name__ == "__main__":
