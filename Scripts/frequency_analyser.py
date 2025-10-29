@@ -1,21 +1,25 @@
+def main():
+    # accuracy of percentage frequency (decimal places)
+    accuracy = 3
+    
+    text = input("$frequency_analyser >>> ")
+    text = text.upper().strip()
+    dictionary = {}
 
-#accuracy of percentage frequency (d.p.)
-accuracy = 3
+    # Build frequency dictionary
+    for letter in text:
+        if letter not in dictionary:
+            dictionary[letter] = {"freq": 1, "percent": round(1 / len(text), accuracy)}
+        else:
+            dictionary[letter]["freq"] += 1
+            dictionary[letter]["percent"] = round(dictionary[letter]["freq"] / len(text), accuracy)
 
-def analyse_freq(text):
-          text = text.upper().strip()
-          dictionary = {}
+    # Order dictionary after the loop finishes
+    dictionary = dict(sorted(dictionary.items(), key=lambda item: item[1]["freq"], reverse=True))
 
-          for letter in text:
-                    if letter not in dictionary:
-                              #create a nested dictionary for character frequency and percent
-                              dictionary[letter] = {"freq": 1, "percent": round(1 / len(text), accuracy)}
-                    else:
-                              #increases frequency and updates percent
-                              dictionary[letter]["freq"] += 1
-                              dictionary[letter]["percent"] = round(dictionary[letter]["freq"] / len(text), accuracy)
+    return dictionary
 
-          #order dictionary based on frequency of letters
-          dictionary = dict(sorted(dictionary.items(), key=lambda item: item[1]["freq"], reverse=True))
 
-          return dictionary
+if __name__ == "__main__":
+    result = main()
+    print(result)
