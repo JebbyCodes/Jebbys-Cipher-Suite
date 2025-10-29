@@ -1,8 +1,10 @@
 import os
-import tkinter as tk
-import wordfreq
+import sys
 import customtkinter as ctk
-from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, substitution_de, affine_de, verify, frequency_analyser
+from Scripts import AtBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
+from Scripts.substitution import main_substitution
 
 # Constants #
 VERSION = "1.0"
@@ -123,13 +125,13 @@ def init(Exitable=False):
 
         btn_bacon = ctk.CTkButton(frame_main, text="Bacon Cipher Solver", command=lambda: bacon_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
-        btn_substitution = ctk.CTkButton(frame_main, text="Substitution Cipher Solver", command=lambda: substitution_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_substitution = ctk.CTkButton(frame_main, text="Substitution Cipher Solver", command=lambda: main_substitution.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_affine = ctk.CTkButton(frame_main, text="Affine Cipher Solver", command=lambda: affine_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_freqanalyse = ctk.CTkButton(frame_main, text="Frequency Analyser", command=lambda: frequency_analyser.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
-        
+        btn_vigenere = ctk.CTkButton(frame_main, text="Vigenère Cipher Solver",command=lambda: vigenere_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_verify = ctk.CTkButton(frame_main, text="Verify", command=lambda: verify.main(), width=200, height=100, fg_color="#3EC385", hover_color="#29845D", font=ctk.CTkFont(size=16, weight="bold"))
         
@@ -137,7 +139,8 @@ def init(Exitable=False):
         btn_help.grid(row=0, column=0, padx=5, pady=10, sticky="ew")
         btn_credits.grid(row=0, column=1, padx=5, pady=10, sticky="ew")
 
-        btn_atbash.grid(row=1, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_atbash.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
+        btn_vigenere.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
         btn_caeser.grid(row=2, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_hexoctbin.grid(row=3, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_bacon.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")

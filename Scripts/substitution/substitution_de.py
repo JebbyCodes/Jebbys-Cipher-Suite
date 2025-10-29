@@ -2,6 +2,7 @@
 
 from wordfreq import top_n_list
 
+global wordlist
 
 # function to decode text using current mapping
 def decode(text, mapping):

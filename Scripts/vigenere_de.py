@@ -2,7 +2,7 @@ def main():
     from wordfreq import top_n_list
     from wordsegment import load, segment
     commonwords = top_n_list('en', 100)
-    cipher = str(input(">> ")).lower()
+    cipher = str(input("$vigenere_de >>> ")).lower()
     answers = {}
     load()
     for keywordIndex in range(len(commonwords)):
