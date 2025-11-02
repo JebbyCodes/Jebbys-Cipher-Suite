@@ -18,10 +18,23 @@ def main():
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(0, weight=1)
 
-    # Clear Function #
-    def clear():
-        for widget in root.winfo_children():
-            widget.destroy()
+    def decipher():
+        text = textbox_cipher.get("1.0", ctk.END).strip()
+
+        finaltext = ""
+
+        for word in text.split(" "):
+            try:
+                word = word[2:4] + word[4] + word[0:2] #only works for ch3 part B
+            except:
+                pass
+
+            finaltext += f"{word} "
+
+        #print(finaltext)
+        textbox_plain.configure(state="normal")
+        textbox_plain.insert("1.0", finaltext)
+        textbox_plain.configure(state="disabled")
 
     textbox_frame = ctk.CTkFrame(root)
     textbox_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
@@ -30,24 +43,17 @@ def main():
 
     # -- cipher processing -- #
 
-    textbox_cipher = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12))
+    textbox_cipher = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
     textbox_cipher.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
     textbox_cipher.configure(height=300, width=300)
 
     label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
     label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
 
-    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process Transposition Cipher", command=lambda: None)
-    btn_cipher_process.grid(row=2, column=0, pady=10)
+    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process Transposition Cipher", command=decipher)
+    btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
 
     # -- END cipher processing END -- #
-
-    def update_plain(event=None):
-        text = textbox_cipher.get("1.0", ctk.END).strip()
-        textbox_plain.configure(state="normal")  # enable temporarily
-        textbox_plain.delete("1.0", ctk.END)     # clear old content
-        textbox_plain.insert("1.0", text)        # copy new text
-        textbox_plain.configure(state="disabled")  # disable again
 
     def update_highlight_plain(event):
         """Highlight selected text in both textboxes."""
@@ -65,26 +71,52 @@ def main():
             w.tag_add("sel_txt", first, last)
             w.tag_config("sel_txt", background="#007ACC", foreground="white")
 
-    textbox_cipher.bind("<KeyRelease>", update_plain)
     textbox_cipher.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
 
 
+    def sync_scroll(event=None):
+        first, last = textbox_cipher.yview()
+        textbox_plain.yview_moveto(first)
+        return "break"  # prevent recursive event
+
     # -- plain processing -- #
 
-    textbox_plain = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12))
+    textbox_plain = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
     textbox_plain.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
-    textbox_plain.configure(state="disabled")
-
     textbox_plain.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
-
-    btn_plain_process = ctk.CTkButton(textbox_frame, text="Process Plaintext", command=lambda: None)
-    btn_plain_process.grid(row=2, column=1, pady=10)
 
     label_plain = ctk.CTkLabel(textbox_frame, text="Plaintext:", font=ctk.CTkFont(size=16, weight="bold"))
     label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
 
     # -- END plain processing END -- #
 
+    # -- Sync scrolling -- #
+    scroll_shared = ctk.CTkScrollbar(textbox_frame)
+    scroll_shared.grid(row=1, column=2, sticky="ns", pady=20)
+
+    def sync_scroll(*args):
+        #Handle scrollbar or mousewheel scrolls.
+        textbox_cipher.yview(*args)
+        textbox_plain.yview(*args)
+        return "break"
+
+    def on_cipher_scroll(first, last):
+        #Sync cipher scroll updates to shared scrollbar.
+        scroll_shared.set(first, last)
+        textbox_plain.yview_moveto(first)
+
+    def on_plain_scroll(first, last):
+        #Sync plain scroll updates to shared scrollbar.
+        scroll_shared.set(first, last)
+        textbox_cipher.yview_moveto(first)
+
+    textbox_cipher.configure(yscrollcommand=on_cipher_scroll)
+    textbox_plain.configure(yscrollcommand=on_plain_scroll)
+    scroll_shared.configure(command=sync_scroll)
+
+    textbox_plain.configure(state="disabled")
+    
+    # -- END Sync scrolling END -- #
 
     root.mainloop()
 
