@@ -1,7 +1,7 @@
 import os
 import sys
 import customtkinter as ctk
-from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de
+from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
 from Scripts.substitution import main_substitution
@@ -141,6 +141,8 @@ def init(Exitable=False):
 
         btn_caeser = ctk.CTkButton(frame_main, text="Caeser Cipher Solver", command=lambda: caeser_cipher_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
+        btn_transposition = ctk.CTkButton(frame_main, text="Transposition Cipher Solver", command=lambda: transposition_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+
         btn_hexoctbin = ctk.CTkButton(frame_main, text="Hex/Oct/Bin Decoder", command=lambda: hex_oct_bin_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_bacon = ctk.CTkButton(frame_main, text="Bacon Cipher Solver", command=lambda: bacon_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
@@ -162,7 +164,8 @@ def init(Exitable=False):
 
         btn_atbash.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
         btn_vigenere.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
-        btn_caeser.grid(row=2, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_caeser.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
+        btn_transposition.grid(row=2, column=1, padx=5, pady=10, sticky="nsew")
         btn_hexoctbin.grid(row=3, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_bacon.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_substitution.grid(row=5, column=0, columnspan=2, pady=10, sticky="nsew")
