@@ -1,5 +1,23 @@
-# <img src="./res/icon%20512x512.png" width="48" height="48"> Jebby's Cipher Suite
-A suite of Python files created for the [National Cipher Challenge 2025](https://www.cipherchallenge.org/)
+<p align="center">
+    <img src="https://iili.io/KLv4C8B.png"
+        height="48">
+    <img src="https://iili.io/KLv8nKN.md.png"
+        height="250">
+</p>
+
+<!-- Once made public: banner: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg 
+                       favicon: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/favicon.ico
+                       signature: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/Harrys-signature-reversed.png
+-->
+
+<p align="center">
+  A suite of Python files created for the 
+  <a href="https://www.cipherchallenge.org/" target="_blank">
+    National Cipher Challenge 2025
+  </a>
+</p>
+
+<br>
 
 <p align="center">
   <a href="https://github.com/JebbyCodes/Jebbys-Cipher-Suite/stargazers">
@@ -31,4 +49,9 @@ A suite of Python files created for the [National Cipher Challenge 2025](https:/
 - All credits are located within `main.py`.
 
 <br><br><br><br><br><br><br><br>
-![Signature](./res/Harrys-signature-reversed.png)
+
+<p align="right">
+  <img src=https://iili.io/KLvb87a.md.png
+     height=40>
+</p>
+
