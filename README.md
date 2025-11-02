@@ -5,7 +5,8 @@ A suite of Python files created for the [National Cipher Challenge 2025](https:/
 - Jebby's Cipher Suite aims to congregate Jebby's Jailbreak V2's python scripts into a unified GUI for deciphering.
 
 ## How to Run:
-- Just run `main.py`!
+- You must first clone this repository with the command `git clone https://github.com/JebbyCodes/Jebbys-Cipher-Suite`.
+- Then run `main.py`.
 
 ## Requirements:
 - Check `requirements.txt` - which is located at the root.
