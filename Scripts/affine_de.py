@@ -1,6 +1,8 @@
-## thanks too this stack overflow person:
-## https://stackoverflow.com/questions/10133194/reverse-modulus-operator
-## I could solve it
+""""
+thanks too this stack overflow person:
+https://stackoverflow.com/questions/10133194/reverse-modulus-operator
+I could solve it
+"""
 
 
 def main():
