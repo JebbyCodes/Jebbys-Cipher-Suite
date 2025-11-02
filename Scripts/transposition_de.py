@@ -1,5 +1,4 @@
 import os
-import sys
 import customtkinter as ctk
 
 def main():
