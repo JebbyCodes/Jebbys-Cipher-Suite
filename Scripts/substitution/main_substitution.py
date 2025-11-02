@@ -187,6 +187,12 @@ def main():
         entry.bind("<KeyRelease>", lambda e, idx=i: updateplaintext(idx))
         entries.append(entry)
 
+
+    def on_closing():   
+        root.withdraw()
+        root.quit()
+
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
 
 
