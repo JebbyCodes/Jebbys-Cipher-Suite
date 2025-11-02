@@ -1,37 +1,8 @@
-"""
-def main():
-    text = input("$hex_oct_bin_de >>> ")
-    #  Hex / Bin / Octo
-    # works by converting value in denary then into ascii
 
-    valueasd  = 0
-
-    ## Add the text in the string litteral below
-    text = """ """.upper().split(" ") 
-    groups = [16, 8, 2]
-
-    plainText = ""
-    for group in groups:
-        for let in text:
-            try:
-                value = int(let, group)
-                plainText += chr(value)
-            except ValueError:
-                print(f"not in base {group}")
-                print()
-                break
-
-        print(plainText)
-        plainText = ""
-
-if __name__ == "__main__":
-    main()  # only runs if you execute this file directly
-"""
-    
 import os
 import customtkinter as ctk
 import tkinter as tk
-
+from wordfreq import top_n_list
 def main():
 
     # Constants #
@@ -48,58 +19,67 @@ def main():
     root.grid_columnconfigure(0, weight=1)
 
     def decipher():
+        commonwords = top_n_list('en', 5000)
+
+        freq = 0
+        oldFreq = 0
         #  Hex / Bin / Octo
         # works by converting value in denary then into ascii
 
         ## Add the text in the string litteral below
         text = textbox_cipher.get("1.0", ctk.END).strip().upper().replace(" ", "")
+        noSpaces = text.replace(" ", "")
+        backToString = ""
+        mostLikely = ""
+        if all(let in "0123456789ABCDEF " for let in noSpaces): # yes this works somehow
+            result = [noSpaces[i:i+2] for i in range(0, len(noSpaces), 2)]
+            decoded = ''.join(chr(int(x, 16)) for x in result).split(" ")
+            for word in decoded:
+                if word in commonwords:
+                    freq += 1
+            
+     
+            if freq > oldFreq:
+                mostLikely = decoded
+                oldFreq = freq
+                freq = 0
+                       
+     
+        if all(let in "01234567 " for let in noSpaces): # yes this works somehow
+            result = [noSpaces[i:i+3] for i in range(0, len(noSpaces), 3)]
+            decoded = ''.join(chr(int(x, 8)) for x in result).split(" ")
+            for word in decoded:
+                if word in commonwords:
+                    freq += 1
 
-        chunks = [text[i:i+2] for i in range(0, len(text), 2)]
-        plainText = ""
-        for chunk in chunks:
-            try:
-                value = int(chunk, 16)
-                plainText += chr(value)
-                textbox_plain.configure(state="normal")
-                textbox_plain.delete("1.0", ctk.END)
-                textbox_plain.insert("1.0", plainText)
-                textbox_plain.configure(state="disabled")
+            if freq > oldFreq:
+                mostLikely = decoded
+                oldFreq = freq
+                freq = 0
+            
+        if all(let in "01 " for let in noSpaces):
+            freq = 0
+            result = [noSpaces[i:i+8] for i in range(0, len(noSpaces), 8)]
+            decoded = ''.join(chr(int(x, 2)) for x in result).split(" ")
+            for word in decoded:
+                if word in commonwords:
+                    freq += 1
+            
 
-            except ValueError:
-                print(f"not in base {16}\n")
-                break
-
-        chunks = [text[i:i+3] for i in range(0, len(text), 3)]
-        plainText = ""
-        for chunk in chunks:
-            try:
-                value = int(chunk, 8)
-                plainText += chr(value)
-                textbox_plain.configure(state="normal")
-                textbox_plain.delete("1.0", ctk.END)
-                textbox_plain.insert("1.0", plainText)
-                textbox_plain.configure(state="disabled")
-                
-            except ValueError:
-                print(f"not in base {8}\n")
-                break
-
+            if freq > oldFreq:
+                mostLikely = decoded
+                oldFreq = freq
+                freq = 0
         
-        chunks = [text[i:i+4] for i in range(0, len(text), 4)]
-        plainText = ""
-        for chunk in chunks:
-            try:
-                value = int(chunk, 2)
-                plainText += chr(value)
-                textbox_plain.configure(state="normal")
-                textbox_plain.delete("1.0", ctk.END)
-                textbox_plain.insert("1.0", plainText)
-                textbox_plain.configure(state="disabled")
-                
-            except ValueError:
-                print(f"not in base {2}\n")
-                break
         
+        for x in mostLikely:
+            backToString += x + " "
+        backToString.strip()
+
+        textbox_plain.configure(state="normal")
+        textbox_plain.delete("1.0", ctk.END)
+        textbox_plain.insert("1.0", backToString)
+        textbox_plain.configure(state="disabled")
 
     textbox_frame = ctk.CTkFrame(root)
     textbox_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
