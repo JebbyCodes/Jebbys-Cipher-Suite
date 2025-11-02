@@ -1,5 +1,6 @@
 import os
 import customtkinter as ctk
+import tkinter as tk
 
 def main():
     pass
@@ -34,6 +35,7 @@ def main():
     textbox_cipher.configure(height=300, width=300)
 
     label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
+    label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
 
     btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process Transposition Cipher", command=lambda: None)
     btn_cipher_process.grid(row=2, column=0, pady=10)
@@ -47,25 +49,41 @@ def main():
         textbox_plain.insert("1.0", text)        # copy new text
         textbox_plain.configure(state="disabled")  # disable again
 
+    def update_highlight_plain(event):
+        """Highlight selected text in both textboxes."""
+        original = event.widget
+        try:
+            first = original.index("sel.first")
+            last = original.index("sel.last")
+        except tk.TclError:
+            for w in [textbox_cipher, textbox_plain]:
+                w.tag_remove("sel_txt", "1.0", ctk.END)
+            return
+
+        for w in [textbox_cipher, textbox_plain]:
+            w.tag_remove("sel_txt", "1.0", ctk.END)
+            w.tag_add("sel_txt", first, last)
+            w.tag_config("sel_txt", background="#007ACC", foreground="white")
+
     textbox_cipher.bind("<KeyRelease>", update_plain)
+    textbox_cipher.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
+
 
     # -- plain processing -- #
 
     textbox_plain = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12))
     textbox_plain.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
-    textbox_cipher.configure(height=300, width=300)
     textbox_plain.configure(state="disabled")
+
+    textbox_plain.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
 
     btn_plain_process = ctk.CTkButton(textbox_frame, text="Process Plaintext", command=lambda: None)
     btn_plain_process.grid(row=2, column=1, pady=10)
 
     label_plain = ctk.CTkLabel(textbox_frame, text="Plaintext:", font=ctk.CTkFont(size=16, weight="bold"))
+    label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
 
     # -- END plain processing END -- #
-
-
-    label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
-    label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
 
 
     root.mainloop()
