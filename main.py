@@ -1,6 +1,6 @@
 import os
 import sys
-import customtkinter as ctk
+import customtkinter as ctk # type: ignore
 from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
