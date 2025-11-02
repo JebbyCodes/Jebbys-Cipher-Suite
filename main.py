@@ -14,7 +14,7 @@ credits_filler = "\n********************************************************\n\n
 
 root = ctk.CTk()
 root.title("Jebby's Cipher Suite")
-root.geometry("400x700")
+root.geometry("500x700")
 root.iconbitmap(os.path.join(rootdir, "res", "favicon.ico"))
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
@@ -142,6 +142,7 @@ def init(Exitable=False):
         btn_caeser = ctk.CTkButton(frame_main, text="Caeser Cipher Solver", command=lambda: caeser_cipher_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
         btn_transposition = ctk.CTkButton(frame_main, text="Transposition Cipher Solver", command=lambda: transposition_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_transposition._text_label.configure(wraplength = root.winfo_width())
 
         btn_hexoctbin = ctk.CTkButton(frame_main, text="Hex/Oct/Bin Decoder", command=lambda: hex_oct_bin_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
