@@ -7,7 +7,7 @@ def main():
     # Constants #
     VERSION = "1.0"
     # Get root directory
-    rootdir = os.path.dirname(__file__)
+    rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n"
     state = {
         "plaintext": "",
@@ -18,6 +18,7 @@ def main():
 
     root = ctk.CTk()
     root.title("Verfication Suite")
+    root.iconbitmap(os.path.join(rootdir, "res", "favicon.ico"))
     root.geometry("750x750")
 
     # Clear Function #
@@ -101,6 +102,11 @@ def main():
         
 
     init()
+    def on_closing():   
+        root.withdraw()
+        root.quit()
+
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
 
 if __name__ == "__main__":
