@@ -179,4 +179,9 @@ def init(Exitable=False):
 
 
 init()
+def on_closing():    
+    root.withdraw()
+    root.quit()
+
+root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()

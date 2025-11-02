@@ -117,7 +117,12 @@ def main():
     textbox_plain.configure(state="disabled")
     
     # -- END Sync scrolling END -- #
+    def on_closing():
+        
+        root.withdraw()
+        root.quit()
 
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
 
 if __name__ == "__main__":
