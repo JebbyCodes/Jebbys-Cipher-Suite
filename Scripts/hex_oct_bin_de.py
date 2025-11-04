@@ -19,7 +19,7 @@ def main():
     root.grid_columnconfigure(0, weight=1)
 
     def decipher():
-        commonwords = top_n_list('en', 5000)
+        commonwords = top_n_list('en', 50000000000)
 
         freq = 0
         oldFreq = 0
