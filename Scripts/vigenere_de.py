@@ -1,4 +1,4 @@
-def main():
+'''
     from wordfreq import top_n_list
     from wordsegment import load, segment
     commonwords = top_n_list('en', 100)
@@ -54,8 +54,251 @@ def main():
     for freq in sorted(answers.keys(), reverse=False):
         for text in answers[freq]:
             print(f"{text}")
+'''
             
+
+"""
+def main():
+    # add text into the string litteral below
+    text = input("$atBash_de >>> ")
+
+    def cipher(text):
+        result = ""
+
+        for i in range(len(text)):
+            char = text[i]
+            if char not in alpha:
+                continue
+            else:
+                index1 = alpha.index(char)
+                alpha.reverse()
+                result += alpha[index1]
+
+
+        return result
+
+    alpha = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+
+
+    print(cipher(text).upper())
+"""
+    
+import os
+import customtkinter as ctk
+import tkinter as tk
+import threading
+
+def main():
+    from wordfreq import top_n_list, tokenize
+    from wordsegment import load, segment
+
+    # Constants #
+    VERSION = "1.0"
+    # Get root directory
+    rootdir = os.path.dirname(os.path.dirname(__file__))
+    credits_filler = "\n********************************************************\n\n"
+
+    root = ctk.CTk()
+    root.title("Vigenere Cipher Solver")
+    root.geometry("1000x700")
+    root.iconbitmap(os.path.join(rootdir, "res", "favicon.ico"))
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+
+
+    def decipher():
+        loading_thread.start()
+        # add text into the string litteral below
+        commonwords = top_n_list('en', 9999) #verrrrrry slow..... but works
+        cipher = str(textbox_cipher.get("1.0", ctk.END).strip()).lower()
+        answers = {}
+        load()
+        for keywordIndex in range(len(commonwords)):
+            freq = 0
+            keyword = commonwords[keywordIndex]
+            keywordFit = ""
+            plaintext = ""
+            keyIndex = 0
+            ## have cipher length
+            ## have keyword length
+            ## need keyword the fit the length of the cipher
+            ## once complete just minus the values of the letters from each other
+
+            for let in cipher:
+                if let.isalpha():
+                    letValue = ord(let) - ord('a')
+                    keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
+                    value = (letValue - keyValue + 26) % 26 + ord( 'a') # Not sure how, but I guessed this and it was right
+                    plaintext += chr(value)
+                    keyIndex += 1
+
+
+            
+        for keyword in commonwords:
+            freq = 0
+            plaintext = ""
+            keyIndex = 0
+
+            for let in cipher:
+                if let.isalpha():
+                    letValue = ord(let) - ord('a')
+                    keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
+                    value = (letValue - keyValue + 26) % 26 + ord('a')
+                    plaintext += chr(value)
+                    keyIndex += 1
+                else:
+                    plaintext += let
+
+            words = ' '.join(segment(plaintext))
+
+
+            for word in words.split():
+                if word in commonwords:
+                    freq += 1
+
+            answers.setdefault(freq, []).append(plaintext)
+
+        ## prints mostly likely from the bottom to the top
+        for freq in sorted(answers.keys(), reverse=False):
+            for text in answers[freq]:
+                print(f"{text}")
+
+                # Final Checks #
+                #if any(tokenize(text, "en")) in commonwords:
+                textbox_plain.configure(state="normal")
+                textbox_plain.insert(ctk.END, f"{text}\n\n")
+                textbox_plain.configure(state="disabled")
+        
+
+    textbox_frame = ctk.CTkFrame(root)
+    textbox_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    textbox_frame.grid_columnconfigure(0, weight=1, uniform="textcols")
+    textbox_frame.grid_columnconfigure(1, weight=1, uniform="textcols")
+
+    # -- cipher processing -- #
+    decipher_thread = threading.Thread(target=decipher)
     
 
+    textbox_cipher = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
+    textbox_cipher.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
+    textbox_cipher.configure(height=300, width=300)
+
+    label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
+    label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
+
+    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process AtBash Cipher", command=decipher_thread.start)
+    btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
+
+    # -- END cipher processing END -- #
+
+    def update_highlight_plain(event):
+        """Highlight selected text in both textboxes."""
+        original = event.widget
+        try:
+            first = original.index("sel.first")
+            last = original.index("sel.last")
+        except tk.TclError:
+            for w in [textbox_cipher, textbox_plain]:
+                w.tag_remove("sel_txt", "1.0", ctk.END)
+            return
+
+        for w in [textbox_cipher, textbox_plain]:
+            w.tag_remove("sel_txt", "1.0", ctk.END)
+            w.tag_add("sel_txt", first, last)
+            w.tag_config("sel_txt", background="#007ACC", foreground="white")
+
+    textbox_cipher.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
+
+
+    def sync_scroll(event=None):
+        first, last = textbox_cipher.yview()
+        textbox_plain.yview_moveto(first)
+        return "break"  # prevent recursive event
+
+    # -- plain processing -- #
+
+    textbox_plain = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
+    textbox_plain.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
+    textbox_plain.bind("<<Selection>>", update_highlight_plain) # we want it to go both ways
+
+    label_plain = ctk.CTkLabel(textbox_frame, text="Plaintext:", font=ctk.CTkFont(size=16, weight="bold"))
+    label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
+
+    # -- END plain processing END -- #
+
+    # -- General Processing -- #
+    textbox_processing = ctk.CTkTextbox(textbox_frame, font=("Courier New", 24), activate_scrollbars=False)
+    textbox_processing.grid(row=3, columnspan=2, padx=10, sticky="nsew")
+    textbox_processing.configure(state="normal")
+    textbox_processing.insert("1.0", "NOT RUNNING")
+    textbox_processing.configure(state="disabled")
+
+    def processing():
+        while decipher_thread.is_alive():
+                textbox_processing.configure(state="normal")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.configure(state="disabled")
+
+    loading_thread = threading.Thread(target=processing)
+
+    # -- Sync scrolling -- #
+    scroll_shared = ctk.CTkScrollbar(textbox_frame)
+    scroll_shared.grid(row=1, column=2, sticky="ns", pady=20)
+
+    def sync_scroll(*args):
+        #Handle scrollbar or mousewheel scrolls.
+        textbox_cipher.yview(*args)
+        textbox_plain.yview(*args)
+        return "break"
+
+    def on_cipher_scroll(first, last):
+        #Sync cipher scroll updates to shared scrollbar.
+        scroll_shared.set(first, last)
+        textbox_plain.yview_moveto(first)
+
+    def on_plain_scroll(first, last):
+        #Sync plain scroll updates to shared scrollbar.
+        scroll_shared.set(first, last)
+        textbox_cipher.yview_moveto(first)
+
+    textbox_cipher.configure(yscrollcommand=on_cipher_scroll)
+    textbox_plain.configure(yscrollcommand=on_plain_scroll)
+    scroll_shared.configure(command=sync_scroll)
+
+    textbox_plain.configure(state="disabled")
+    
+
+    # -- END Sync scrolling END -- #
+    def on_closing():
+        
+        root.withdraw()
+        root.quit()
+
+    root.protocol("WM_DELETE_WINDOW", on_closing)
+    root.mainloop()
+
+
 if __name__ == "__main__":
-    main()
+    main()  # only runs if you execute this file directly
+
+
+
+
+
