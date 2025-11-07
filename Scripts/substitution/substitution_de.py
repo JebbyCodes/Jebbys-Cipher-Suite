@@ -1,8 +1,7 @@
 
 
 from wordfreq import top_n_list
-
-global wordlist
+from frequency_analyser import analyse_freq
 
 # function to decode text using current mapping
 def decode(text, mapping):
@@ -17,6 +16,8 @@ def decode(text, mapping):
                 decoded += "_"
         else:
             decoded += letter
+
+    
             
     return decoded
 
@@ -111,16 +112,24 @@ def substitutiondecode(text):
         return [word for word in wordlist if word != removeme]
 
 
-    the = mostcommon(wordlist, f"___")
+    the = mostcommon(wordlist, f"__{next(iter(analyse_freq(text)))}")
+
                 
     # assuming the most common word is "the" we can being the letter mapping
     mapping["T"], mapping["H"], mapping["E"] = the[0], the[1], the[2]
+
+    print(the[0], the[1], the[2])
+    print(mapping["T"], mapping["H"], mapping["E"])
+    
 
     # remove "the" from wordlist for future 3 letter words to be decoded
     wordlist = removedword(wordlist, the)
 
     # SECURE mapping for I
+    
     it = mostcommon(wordlist, f"_{mapping['T']}")
+    # print(f"_{it}_{mapping['T']}")
+    # print(wordlist, decode(text, mapping))
     mapping["I"] = it[0]
 
 
@@ -134,7 +143,8 @@ def substitutiondecode(text):
 
     if checkmapping(wordlist, mapping) == True:
         ____ing = mostcommon(wordlist, f"____{mapping['I']}{mapping['N']}_")
-        mapping["G"] = ____ing[6]
+        if mapping["E"] != ____ing[6]:
+            mapping["G"] = ____ing[6]
 
 
         andvar = mostcommon(wordlist, f"{mapping['A']}{mapping['N']}_")
