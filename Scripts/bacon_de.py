@@ -1,30 +1,9 @@
-"""
-def main():
-    text  = str(input("$bacon_de >>> ")).lower().split(" ")
-    cipher(text)
-
-def cipher(text):
-    plaintext=""
-    for let in text:
-        total = 0
-        for value in range(len(let)):
-            char=let[value]
-
-            if char == "b":
-                total += 2**(5-(value+1))
-
-
-        plaintext += chr(total+65)
-
-    print(plaintext)
-
-if __name__ == "__main__":
-    main()
-"""
 
 import os
 import customtkinter as ctk
 import tkinter as tk
+import threading
+
 
 def main():
 
@@ -33,6 +12,7 @@ def main():
     # Get root directory
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
+    state = {"decipher_running": False}
 
     root = ctk.CTk()
     root.title("Bacon Cipher Solver")
@@ -42,6 +22,9 @@ def main():
     root.grid_columnconfigure(0, weight=1)
 
     def decipher():
+        state["decipher_running"] = True
+        threading.Thread(target=processing).start()
+
         text  = textbox_cipher.get("1.0", ctk.END).strip().lower().split(" ")
         plaintext=""
         for let in text:
@@ -60,13 +43,15 @@ def main():
         textbox_plain.configure(state="normal")
         textbox_plain.insert("1.0", plaintext)
         textbox_plain.configure(state="disabled")
+        state["decipher_running"] = False
+
 
     textbox_frame = ctk.CTkFrame(root)
     textbox_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
     textbox_frame.grid_columnconfigure(0, weight=1, uniform="textcols")
     textbox_frame.grid_columnconfigure(1, weight=1, uniform="textcols")
 
-    # -- cipher processing -- #
+   # -- cipher processing -- #
 
     textbox_cipher = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
     textbox_cipher.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
@@ -75,7 +60,14 @@ def main():
     label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
     label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
 
-    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process Bacon Cipher", command=decipher)
+    def start_decipher():
+        threading.Thread(target=decipher).start()
+
+    btn_cipher_process = ctk.CTkButton(
+        textbox_frame,
+        text="Process Bacon Cipher",
+        command=start_decipher
+    )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
 
     # -- END cipher processing END -- #
@@ -114,6 +106,44 @@ def main():
     label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
 
     # -- END plain processing END -- #
+
+    # -- General Processing -- #
+    textbox_processing = ctk.CTkTextbox(textbox_frame, font=("Courier New", 24), activate_scrollbars=False)
+    textbox_processing.grid(row=3, columnspan=2, padx=10, sticky="nsew")
+    textbox_processing.configure(state="normal")
+    textbox_processing.insert("1.0", "NOT RUNNING")
+    textbox_processing.configure(state="disabled")
+
+    def processing():
+        while state["decipher_running"]:
+                textbox_processing.configure(state="normal")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.configure(state="disabled")
+
 
     # -- Sync scrolling -- #
     scroll_shared = ctk.CTkScrollbar(textbox_frame)

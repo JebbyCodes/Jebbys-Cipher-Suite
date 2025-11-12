@@ -1,93 +1,9 @@
-'''
-    from wordfreq import top_n_list
-    from wordsegment import load, segment
-    commonwords = top_n_list('en', 100)
-    cipher = str(input("$vigenere_de >>> ")).lower()
-    answers = {}
-    load()
-    for keywordIndex in range(len(commonwords)):
-        freq = 0
-        keyword = commonwords[keywordIndex]
-        keywordFit = ""
-        plaintext = ""
-        keyIndex = 0
-        ## have cipher length
-        ## have keyword length
-        ## need keyword the fit the length of the cipher
-        ## once complete just minus the values of the letters from each other
-
-        for let in cipher:
-            if let.isalpha():
-                letValue = ord(let) - ord('a')
-                keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
-                value = (letValue - keyValue + 26) % 26 + ord( 'a') # Not sure how, but I guessed this and it was right
-                plaintext += chr(value)
-                keyIndex += 1
-
-
-        
-    for keyword in commonwords:
-        freq = 0
-        plaintext = ""
-        keyIndex = 0
-
-        for let in cipher:
-            if let.isalpha():
-                letValue = ord(let) - ord('a')
-                keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
-                value = (letValue - keyValue + 26) % 26 + ord('a')
-                plaintext += chr(value)
-                keyIndex += 1
-            else:
-                plaintext += let
-
-        words = ' '.join(segment(plaintext))
-
-
-        for word in words.split():
-            if word in commonwords:
-                freq += 1
-
-        answers.setdefault(freq, []).append(plaintext)
-
-    ## prints mostly likely from the bottom to the top
-    for freq in sorted(answers.keys(), reverse=False):
-        for text in answers[freq]:
-            print(f"{text}")
-'''
-            
-
-"""
-def main():
-    # add text into the string litteral below
-    text = input("$atBash_de >>> ")
-
-    def cipher(text):
-        result = ""
-
-        for i in range(len(text)):
-            char = text[i]
-            if char not in alpha:
-                continue
-            else:
-                index1 = alpha.index(char)
-                alpha.reverse()
-                result += alpha[index1]
-
-
-        return result
-
-    alpha = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-
-
-    print(cipher(text).upper())
-"""
-    
+  
 import os
 import customtkinter as ctk
 import tkinter as tk
 import threading
+import time
 
 def main():
     from wordfreq import top_n_list, tokenize
@@ -98,6 +14,7 @@ def main():
     # Get root directory
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
+    state = {"decipher_running": False}
 
     root = ctk.CTk()
     root.title("Vigenere Cipher Solver")
@@ -108,8 +25,10 @@ def main():
 
 
     def decipher():
-        loading_thread.start()
-        # add text into the string litteral below
+        state["decipher_running"] = True
+        threading.Thread(target=processing).start()
+
+        # add text into the string literal below
         commonwords = top_n_list('en', 9999) #verrrrrry slow..... but works
         cipher = str(textbox_cipher.get("1.0", ctk.END).strip()).lower()
         answers = {}
@@ -169,6 +88,8 @@ def main():
                 textbox_plain.configure(state="normal")
                 textbox_plain.insert(ctk.END, f"{text}\n\n")
                 textbox_plain.configure(state="disabled")
+
+        state["decipher_running"] = False
         
 
     textbox_frame = ctk.CTkFrame(root)
@@ -177,7 +98,7 @@ def main():
     textbox_frame.grid_columnconfigure(1, weight=1, uniform="textcols")
 
     # -- cipher processing -- #
-    decipher_thread = threading.Thread(target=decipher)
+    #decipher_thread = threading.Thread(target=decipher)
     
 
     textbox_cipher = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
@@ -187,7 +108,14 @@ def main():
     label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
     label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
 
-    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process AtBash Cipher", command=decipher_thread.start)
+    def start_decipher():
+        threading.Thread(target=decipher).start()
+
+    btn_cipher_process = ctk.CTkButton(
+        textbox_frame,
+        text="Process AtBash Cipher",
+        command=start_decipher
+    )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
 
     # -- END cipher processing END -- #
@@ -235,28 +163,35 @@ def main():
     textbox_processing.configure(state="disabled")
 
     def processing():
-        while decipher_thread.is_alive():
+        while state["decipher_running"]:
                 textbox_processing.configure(state="normal")
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING |")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING /")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING -")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING \\")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING |")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING /")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING -")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.insert("1.0", "RUNNING \\")
+                
                 textbox_processing.delete("1.0", "end")
                 textbox_processing.configure(state="disabled")
-
-    loading_thread = threading.Thread(target=processing)
+                
 
     # -- Sync scrolling -- #
     scroll_shared = ctk.CTkScrollbar(textbox_frame)

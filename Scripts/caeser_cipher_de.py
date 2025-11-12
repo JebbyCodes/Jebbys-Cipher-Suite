@@ -1,30 +1,10 @@
-"""
-def main():
-    text = input("$Caeser_de >>> ")
-
-    def cipher(text):
-        text = text.lower()
-        for shift in range(26):
-            result = ""
-            for char in text:
-                if 'a' <= char <= 'z':
-                    result += chr((ord(char) - 97 - shift) % 26 + 97)
-                else:
-                    result += char
-            print(result)
-
-    cipher(text)
-
-if __name__ == "__main__":
-    main()  # only runs if you execute this file directly
-"""
-
 
 import os
 import customtkinter as ctk
 import tkinter as tk
 from wordfreq import top_n_list
 from wordfreq import tokenize
+import threading
 
 def main():
 
@@ -33,6 +13,7 @@ def main():
     # Get root directory
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
+    state = {"decipher_running": False}
 
     root = ctk.CTk()
     root.title("Caeser Cipher Solver")
@@ -42,26 +23,38 @@ def main():
     root.grid_columnconfigure(0, weight=1)
 
     def decipher():
+        state["decipher_running"] = True
+        threading.Thread(target=processing).start()
+
         text = textbox_cipher.get("1.0", ctk.END).strip()
         top_words = set(top_n_list("en", 10000000, wordlist='best'))
 
-        def cipher(text):
-            text = text.lower()
+        def update_plain(result):
+            textbox_plain.configure(state="normal")
+            textbox_plain.insert("1.0", result + "\n")
+            textbox_plain.configure(state="disabled")
+
+        # Run the actual cipher processing in a new thread
+        def run_cipher():
+            t = text.lower()
             for shift in range(26):
                 result = ""
-                for char in text:
+                for char in t:
                     if 'a' <= char <= 'z':
                         result += chr((ord(char) - 97 - shift) % 26 + 97)
                     else:
                         result += char
-                
+
                 words = tokenize(result, 'en')
                 if any(word in top_words for word in words):
-                    textbox_plain.configure(state="normal")
-                    textbox_plain.insert("1.0", result +"\n")
-                    textbox_plain.configure(state="disabled")
+                    # Use after to update GUI from thread
+                    textbox_plain.after(0, lambda r=result: update_plain(r))
 
-        cipher(text)
+            state["decipher_running"] = False
+
+        threading.Thread(target=run_cipher).start()
+
+
 
     textbox_frame = ctk.CTkFrame(root)
     textbox_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
@@ -77,7 +70,14 @@ def main():
     label_cipher = ctk.CTkLabel(textbox_frame, text="Ciphertext:", font=ctk.CTkFont(size=16, weight="bold"))
     label_cipher.grid(row=0, column=0, padx=20, pady=(10,0))
 
-    btn_cipher_process = ctk.CTkButton(textbox_frame, text="Process Caeser Cipher", command=decipher)
+    def start_decipher():
+        threading.Thread(target=decipher).start()
+
+    btn_cipher_process = ctk.CTkButton(
+        textbox_frame,
+        text="Process Caeser Cipher",
+        command=start_decipher
+    )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
 
     # -- END cipher processing END -- #
@@ -116,6 +116,44 @@ def main():
     label_plain.grid(row=0, column=1, padx=20, pady=(10,0))
 
     # -- END plain processing END -- #
+
+
+# -- General Processing -- #
+    textbox_processing = ctk.CTkTextbox(textbox_frame, font=("Courier New", 24), activate_scrollbars=False)
+    textbox_processing.grid(row=3, columnspan=2, padx=10, sticky="nsew")
+    textbox_processing.configure(state="normal")
+    textbox_processing.insert("1.0", "NOT RUNNING")
+    textbox_processing.configure(state="disabled")
+
+    def processing():
+        while state["decipher_running"]:
+                textbox_processing.configure(state="normal")
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING |")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING /")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING -")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.insert("1.0", "RUNNING \\")
+                
+                textbox_processing.delete("1.0", "end")
+                textbox_processing.configure(state="disabled")
 
     # -- Sync scrolling -- #
     scroll_shared = ctk.CTkScrollbar(textbox_frame)
