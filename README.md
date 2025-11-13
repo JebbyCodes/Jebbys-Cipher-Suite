@@ -1,8 +1,8 @@
 <p align="center">
     <img src="https://iili.io/KLv4C8B.png"
-        height="48">
+        height="48" alt="Harry's Hat">
     <img src="https://iili.io/KLv8nKN.md.png"
-        height="250">
+        height="250" alt="Jebby's Cipher Suite">
 </p>
 
 <!-- Once made public: banner: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg 
@@ -52,6 +52,6 @@
 
 <p align="right">
   <img src=https://iili.io/KLvb87a.md.png
-     height=40>
+     height=40 alt="Harry's Signature">
 </p>
 
