@@ -113,7 +113,7 @@ def main():
 
     btn_cipher_process = ctk.CTkButton(
         textbox_frame,
-        text="Process AtBash Cipher",
+        text="Process Vigenere Cipher",
         command=start_decipher
     )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
