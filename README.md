@@ -43,7 +43,9 @@
 3) Run `main.py`.
 
 ## Requirements:
-- Check `requirements.txt` - which is located at the root.
+- [Git](https://git-scm.com/install/) must be installed in order to clone this repository.
+- [Python](https://www.python.org/downloads/) must be installed in order to run the `.py` files of this repository.
+  - Check `requirements.txt` - which is located at the root - for any python module requirements.
 
 ## Credits:
 - All credits are located within `main.py`.
