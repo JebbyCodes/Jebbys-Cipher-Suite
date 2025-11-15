@@ -4,6 +4,8 @@
 
 **Jebby's Cipher Suite was created with modular, compartmentalised code in mind, to allow ease of editing, viewing and debugging code. As such, it is recommended to not crowd or bunch code into a singular script and potentially obfuscate it, and instead to create a separate script into a module for universal use. Such principles follow the tried and true methods of the [unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy).**
 
+**As per the licence agreement, this software shall only be distributed, shared, etc for NON-COMMERCIAL purposes - as in the code shall not ever be for sale, and exists instead to benefit wider communities.**
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
