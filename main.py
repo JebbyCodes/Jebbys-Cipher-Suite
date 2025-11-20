@@ -29,11 +29,10 @@ def help():
     clear()
     #Help#
     text_help = ctk.CTkTextbox(root, wrap="word")
-    text_help.insert("1.0",f"""
-                     What is this?
-                        >This is a simple Tkinter application to centralise all the created scripts in handy little buttons!
+    text_help.insert("1.0",f"""What is this?
+                        \n\t>This is a simple Tkinter application to centralise all the created scripts into handy little buttons!
                      """)
-    text_help.grid(pady=20)
+    text_help.grid(pady=20, padx=20, sticky="nsew")
     text_help.configure(state="disabled")
     init(Exitable=True)
 
