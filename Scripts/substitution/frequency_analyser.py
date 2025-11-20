@@ -1,9 +1,13 @@
 
+
+import re
+
+
 #accuracy of percentage frequency (d.p.)
 accuracy = 3
 
 def analyse_freq(text):
-          text = text.upper().replace(" ", "")
+          text = re.sub(r'[^A-Z]', '', text.upper().replace(" ", "").replace("\n", ""))
           dictionary = {}
 
           for letter in text:
@@ -19,5 +23,7 @@ def analyse_freq(text):
           dictionary = dict(sorted(dictionary.items(), key=lambda item: item[1]["freq"], reverse=True))
 
           return dictionary
+
+
 
 

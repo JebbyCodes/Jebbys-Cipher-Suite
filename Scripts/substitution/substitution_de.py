@@ -115,75 +115,78 @@ def substitutiondecode(text):
     the = mostcommon(wordlist, f"__{next(iter(analyse_freq(text)))}")
 
                 
-    # assuming the most common word is "the" we can being the letter mapping
-    mapping["T"], mapping["H"], mapping["E"] = the[0], the[1], the[2]
+    try:
+        mapping["T"], mapping["H"], mapping["E"] = the[0], the[1], the[2]
 
-    print(the[0], the[1], the[2])
-    print(mapping["T"], mapping["H"], mapping["E"])
-    
+        print(the[0], the[1], the[2])
+        print(mapping["T"], mapping["H"], mapping["E"])
+        
 
-    # remove "the" from wordlist for future 3 letter words to be decoded
-    wordlist = removedword(wordlist, the)
+        # remove "the" from wordlist for future 3 letter words to be decoded
+        wordlist = removedword(wordlist, the)
 
-    # SECURE mapping for I
-    
-    it = mostcommon(wordlist, f"_{mapping['T']}")
-    # print(f"_{it}_{mapping['T']}")
-    # print(wordlist, decode(text, mapping))
-    mapping["I"] = it[0]
-
-
-    # SECURE mapping for A
-    wordlist = removedword(wordlist, mapping["I"])
-    a = mostcommon(wordlist, f"_")
-    mapping["A"] = a[0]
-
-    then = mostcommon(wordlist, f"{mapping['T']}{mapping['H']}{mapping['E']}_")
-    mapping["N"] = then[3]
-
-    if checkmapping(wordlist, mapping) == True:
-        ____ing = mostcommon(wordlist, f"____{mapping['I']}{mapping['N']}_")
-        if mapping["E"] != ____ing[6]:
-            mapping["G"] = ____ing[6]
+        # SECURE mapping for I
+        
+        it = mostcommon(wordlist, f"_{mapping['T']}")
+        # print(f"_{it}_{mapping['T']}")
+        # print(wordlist, decode(text, mapping))
+        mapping["I"] = it[0]
 
 
-        andvar = mostcommon(wordlist, f"{mapping['A']}{mapping['N']}_")
-        mapping["D"] = andvar[2]
+        # SECURE mapping for A
+        wordlist = removedword(wordlist, mapping["I"])
+        a = mostcommon(wordlist, f"_")
+        mapping["A"] = a[0]
 
-        wordlist = removedword(wordlist, f"{mapping['A']}{mapping['T']}")
-        wordlist = removedword(wordlist, f"{mapping['A']}{mapping['N']}")
-
-        # for future reference i could try "AM" here instead of "AS"
-        asvar = mostcommon(wordlist, f"{mapping['A']}_")
-        mapping["S"] = asvar[1]
-
+        then = mostcommon(wordlist, f"{mapping['T']}{mapping['H']}{mapping['E']}_")
+        mapping["N"] = then[3]
 
         if checkmapping(wordlist, mapping) == True:
-            has = mostcommon(wordlist, f"_{mapping['A']}{mapping['S']}")
-            mapping["H"] = has[0]
+            ____ing = mostcommon(wordlist, f"____{mapping['I']}{mapping['N']}_")
+            if mapping["E"] != ____ing[6]:
+                mapping["G"] = ____ing[6]
+
+
+            andvar = mostcommon(wordlist, f"{mapping['A']}{mapping['N']}_")
+            mapping["D"] = andvar[2]
+
+            wordlist = removedword(wordlist, f"{mapping['A']}{mapping['T']}")
+            wordlist = removedword(wordlist, f"{mapping['A']}{mapping['N']}")
+
+            # for future reference i could try "AM" here instead of "AS"
+            asvar = mostcommon(wordlist, f"{mapping['A']}_")
+            mapping["S"] = asvar[1]
+
+
+            if checkmapping(wordlist, mapping) == True:
+                has = mostcommon(wordlist, f"_{mapping['A']}{mapping['S']}")
+                mapping["H"] = has[0]
+
+                if checkmapping(wordlist, mapping) == True:
+                    pass
+                else:
+                    mapping["H"] = ""
+                    mapping["W"] = has[0]
+                    
+            else:
+                mapping["S"] = ""
+                mapping["M"] = asvar[1]
+
+        else:
+            #print("ive gone to here")
+            mapping["N"] = ""
+            mapping["M"] = then[3]
 
             if checkmapping(wordlist, mapping) == True:
                 pass
             else:
-                mapping["H"] = ""
-                mapping["W"] = has[0]
-                
-        else:
-            mapping["S"] = ""
-            mapping["M"] = asvar[1]
+                mapping["M"] = ""
+                mapping["Y"] = then[3]
 
-    else:
-        #print("ive gone to here")
-        mapping["N"] = ""
-        mapping["M"] = then[3]
-
-        if checkmapping(wordlist, mapping) == True:
-            pass
-        else:
-            mapping["M"] = ""
-            mapping["Y"] = then[3]
-
-    return [decode(text, mapping), mapping]
+        return [decode(text, mapping), mapping]
+    
+    except:
+        pass
 
 
 
