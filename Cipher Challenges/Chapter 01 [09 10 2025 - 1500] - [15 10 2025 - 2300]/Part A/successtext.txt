@@ -1,0 +1,3 @@
+Well done, how long did it take you to break the cipher? If you practiced beforehand then I suspect not long, though if you are new to this then it might have taken a little while to get the hang of it.
+
+If you haven’t already tackled part B of Challenge 1, then now is the time to try. It looks a lot harder, but we have given you a few hints along the way, so see what you can do.

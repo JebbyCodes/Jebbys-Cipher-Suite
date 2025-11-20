@@ -1,0 +1,5 @@
+So now you are an expert at breaking Vignere ciphers! Did you use the Babbage-Kasiski method? It wasn’t published until several years after the events of this case, but I suspect that Charles was already thinking about it! That is certainly what the General is hoping!
+
+Good luck,
+
+Harry

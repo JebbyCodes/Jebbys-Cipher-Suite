@@ -1,0 +1,5 @@
+Congratulations on cracking this one. You are getting to be real experts at breaking substitution ciphers.
+
+I am not sure why Babbage was using a substitution cipher on such an important message, but it looks like at this point the conspirators have not yet set up a secure cipher system (see the comment about keys at the end of the letter) so maybe he had no real choice. I wonder what they will use next time?
+
+Jodie

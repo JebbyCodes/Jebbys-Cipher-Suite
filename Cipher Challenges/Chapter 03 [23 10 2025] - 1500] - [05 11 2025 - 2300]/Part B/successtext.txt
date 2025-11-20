@@ -1,0 +1,7 @@
+Congratulations on breaking this one, you are getting to be a real expert! Now you know how to tackle transposition ciphers as well as substitution ciphers. Here the splitting of the message into 5-letter blocks might have helped hint at the length of the key, and in spotting the pattern.
+
+Usually that help isn’t available, though the number of characters in the message can be a good hint, as the length of the key should be a factor.
+
+There are more sophisticated column transposition ciphers out there too, where the cipher text is read off from the jumbled text by columns instead of rows. You can read about that in our codebreaking guide.
+
+For now you can relax and unwind. There are two weeks between Challenges 3 and 4, giving you plenty of time to prepare for the competition challenges which start on November 6th.
