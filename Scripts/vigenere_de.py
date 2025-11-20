@@ -3,7 +3,6 @@ import os
 import customtkinter as ctk
 import tkinter as tk
 import threading
-import time
 
 def main():
     from wordfreq import top_n_list, tokenize
@@ -14,7 +13,7 @@ def main():
     # Get root directory
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
-    state = {"decipher_running": False}
+    state = {"decipher_running": False, "isKey": False}
 
     root = ctk.CTk()
     root.title("Vigenere Cipher Solver")
@@ -28,68 +27,96 @@ def main():
         state["decipher_running"] = True
         threading.Thread(target=processing).start()
 
-        # add text into the string literal below
-        commonwords = top_n_list('en', 9999) #verrrrrry slow..... but works
-        cipher = str(textbox_cipher.get("1.0", ctk.END).strip()).lower()
-        answers = {}
-        load()
-        for keywordIndex in range(len(commonwords)):
-            freq = 0
-            keyword = commonwords[keywordIndex]
-            keywordFit = ""
-            plaintext = ""
-            keyIndex = 0
-            ## have cipher length
-            ## have keyword length
-            ## need keyword the fit the length of the cipher
-            ## once complete just minus the values of the letters from each other
+        if state["isKey"]:
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            textbox_key.configure(state="disabled")
 
-            for let in cipher:
-                if let.isalpha():
-                    letValue = ord(let) - ord('a')
-                    keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
-                    value = (letValue - keyValue + 26) % 26 + ord( 'a') # Not sure how, but I guessed this and it was right
-                    plaintext += chr(value)
-                    keyIndex += 1
+            def decryptvigenere(ciphertext, key):
+                #print("Using provided key for decryption...")
+                plaintext = ""
+                ciphertext = ciphertext.replace(" ", "").upper()
+                key = key.upper()
 
+                for index in range(len(ciphertext)):
+                    ciphertextindex = alphabet.index(ciphertext[index])
+                    keyindex = alphabet.index(key[index % len(key)])
+                    plaintextindex = (ciphertextindex - keyindex) % 26
 
-            
-        for keyword in commonwords:
-            freq = 0
-            plaintext = ""
-            keyIndex = 0
+                    plaintext += alphabet[plaintextindex]
 
-            for let in cipher:
-                if let.isalpha():
-                    letValue = ord(let) - ord('a')
-                    keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
-                    value = (letValue - keyValue + 26) % 26 + ord('a')
-                    plaintext += chr(value)
-                    keyIndex += 1
-                else:
-                    plaintext += let
-
-            words = ' '.join(segment(plaintext))
-
-
-            for word in words.split():
-                if word in commonwords:
-                    freq += 1
-
-            answers.setdefault(freq, []).append(plaintext)
-
-        ## prints mostly likely from the bottom to the top
-        for freq in sorted(answers.keys(), reverse=False):
-            for text in answers[freq]:
-                print(f"{text}")
-
-                # Final Checks #
-                #if any(tokenize(text, "en")) in commonwords:
+                #return plaintext
                 textbox_plain.configure(state="normal")
-                textbox_plain.insert(ctk.END, f"{text}\n\n")
-                textbox_plain.configure(state="disabled")
+                textbox_plain.delete("1.0", ctk.END)
+                textbox_plain.insert("1.0", plaintext)
 
-        state["decipher_running"] = False
+            textbox_plain.configure(state="disabled")
+            decryptvigenere(str(textbox_cipher.get("1.0", ctk.END).strip()), str(textbox_key.get("1.0", ctk.END).strip()))
+
+            state["decipher_running"] = False
+            textbox_key.configure(state="normal")
+
+
+        else:# add text into the string literal below
+            commonwords = top_n_list('en', 9999) #verrrrrry slow..... but works
+            cipher = str(textbox_cipher.get("1.0", ctk.END).strip()).lower()
+            answers = {}
+            load()
+            for keywordIndex in range(len(commonwords)):
+                freq = 0
+                keyword = commonwords[keywordIndex]
+                plaintext = ""
+                keyIndex = 0
+                ## have cipher length
+                ## have keyword length
+                ## need keyword the fit the length of the cipher
+                ## once complete just minus the values of the letters from each other
+
+                for let in cipher:
+                    if let.isalpha():
+                        letValue = ord(let) - ord('a')
+                        keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
+                        value = (letValue - keyValue + 26) % 26 + ord( 'a') # Not sure how, but I guessed this and it was right
+                        plaintext += chr(value)
+                        keyIndex += 1
+
+
+                
+            for keyword in commonwords:
+                freq = 0
+                plaintext = ""
+                keyIndex = 0
+
+                for let in cipher:
+                    if let.isalpha():
+                        letValue = ord(let) - ord('a')
+                        keyValue = ord(keyword[keyIndex % len(keyword)]) - ord('a')
+                        value = (letValue - keyValue + 26) % 26 + ord('a')
+                        plaintext += chr(value)
+                        keyIndex += 1
+                    else:
+                        plaintext += let
+
+                words = ' '.join(segment(plaintext))
+
+
+                for word in words.split():
+                    if word in commonwords:
+                        freq += 1
+
+                answers.setdefault(freq, []).append(plaintext)
+
+            ## prints mostly likely from the bottom to the top
+            for freq in sorted(answers.keys(), reverse=False):
+                for text in answers[freq]:
+                    print(f"{text}")
+
+                    # Final Checks #
+                    #if any(tokenize(text, "en")) in commonwords:
+                    textbox_plain.configure(state="normal")
+                    textbox_plain.insert(ctk.END, f"{text}\n\n")
+                    textbox_plain.configure(state="disabled")
+
+            state["decipher_running"] = False
         
 
     textbox_frame = ctk.CTkFrame(root)
@@ -116,7 +143,26 @@ def main():
         text="Process Vigenere Cipher",
         command=start_decipher
     )
-    btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
+    btn_cipher_process.grid(row=2, column=0, pady=10)
+
+    # -- key processing -- #
+    textbox_key = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False, height=30, width=200)
+
+    def setKey():
+        if switch_key_var.get() == "on":
+            state["isKey"] = True
+            textbox_key.grid(row=3, column=1, pady=10)
+            #print("Key input enabled")
+        else:
+            state["isKey"] = False
+            textbox_key.grid_forget()
+            #print("Key input disabled")
+
+    switch_key_var = tk.StringVar(value="off")
+
+    switch_key = ctk.CTkSwitch(textbox_frame, text="Input a key?", command=setKey, variable=switch_key_var, onvalue="on", offvalue="off")
+    switch_key.grid(row=2, column=1, pady=10)
+    # -- END key processing END -- #
 
     # -- END cipher processing END -- #
 
@@ -157,7 +203,7 @@ def main():
 
     # -- General Processing -- #
     textbox_processing = ctk.CTkTextbox(textbox_frame, font=("Courier New", 24), activate_scrollbars=False)
-    textbox_processing.grid(row=3, columnspan=2, padx=10, sticky="nsew")
+    textbox_processing.grid(row=5, columnspan=2, padx=10, sticky="nsew")
     textbox_processing.configure(state="normal")
     textbox_processing.insert("1.0", "NOT RUNNING")
     textbox_processing.configure(state="disabled")
