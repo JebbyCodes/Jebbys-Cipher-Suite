@@ -25,7 +25,7 @@ def main():
         state["decipher_running"] = True
         threading.Thread(target=processing).start()
 
-        text  = textbox_cipher.get("1.0", ctk.END).strip().lower().split(" ")
+        text = textbox_cipher.get("1.0", ctk.END).strip().lower().split(" ")
         plaintext=""
         for let in text:
             total = 0

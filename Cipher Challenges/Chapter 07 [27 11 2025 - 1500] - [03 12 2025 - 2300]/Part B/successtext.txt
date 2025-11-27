@@ -1,0 +1,7 @@
+Excellent work. Finding the key length and breaking the cipher makes you a true expert. I hope Babbage’s plans are beginning to come into focus now you have seen this message, though it is still very unclear what the mysterious Rokesmith is up to. Perhaps we need a little more to go on.
+
+In the meantime it looks like it might be worth boning up on the Playfair cipher.
+
+Have fun,
+
+Harry
