@@ -10,3 +10,4 @@ Scripts/__pycache__/vigenere_de.cpython-314.pyc
 Scripts/substitution/__pycache__/frequency_analyser.cpython-314.pyc
 Scripts/substitution/__pycache__/main_substitution.cpython-314.pyc
 Scripts/substitution/__pycache__/substitution_de.cpython-314.pyc
+.vscode/
