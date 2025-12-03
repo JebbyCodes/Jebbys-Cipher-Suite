@@ -1,9 +1,10 @@
 import os
 import sys
 import customtkinter as ctk
-from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de
+from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de, playfair_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
+from Scripts import playfair_de
 from Scripts.substitution import main_substitution
 
 # Constants #
@@ -293,6 +294,9 @@ def init(Exitable=False):
         btn_vigenere = ctk.CTkButton(frame_main, text="Vigenère Cipher Solver",command=lambda: vigenere_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
         btn_vigenere._text_label.configure(wraplength = root.winfo_width())
 
+        btn_playfair = ctk.CTkButton(frame_main, text="Playfair Cipher Solver",command=lambda: playfair_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_playfair._text_label.configure(wraplength = root.winfo_width())
+
         btn_verify = ctk.CTkButton(frame_main, text="Verify", command=lambda: verify.main(), width=200, height=100, fg_color="#3EC385", hover_color="#29845D", font=ctk.CTkFont(size=16, weight="bold"))
         
         # Main Pack #
@@ -307,8 +311,9 @@ def init(Exitable=False):
         btn_bacon.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_substitution.grid(row=5, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_affine.grid(row=6, column=0, columnspan=2, pady=10, sticky="nsew")
-        btn_freqanalyse.grid(row=7, column=0, columnspan=2, pady=10, sticky="nsew")
-        btn_verify.grid(row=8, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_playfair.grid(row=7, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_freqanalyse.grid(row=8, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_verify.grid(row=9, column=0, columnspan=2, pady=10, sticky="nsew")
 
         # ~~ END MAIN ~~ ~~ END MAIN ~~  ~~ END MAIN ~~  ~~ END MAIN ~~
 
