@@ -19,3 +19,11 @@ Moreover, the cipher is **NOT monoalphabetic**, since there cannot be a consiste
 ## Next Steps;
 - Investigate the "Null Cipher" - a kind of cipher which contains plaintext within ciphertext (our issue!), although a viable pattern has not yet been found
 - Investigate variatons of the "Vigenere Cipher" - such as the "Beaufort Cipher"
+
+## HERE COMES THE GREAT NEWS
+- Okay, so right now we are at the key COLNEBAG, and no matter the amount of jumbling - it just doesn't work!!!
+
+- So how about *changing the key...* ,
+    - TAAA-DAAAA 
+        - GOLDEN
+        - Its perfect - it contains the same letters as COLNEBAG, has no duplicates, and is an actual word!!
