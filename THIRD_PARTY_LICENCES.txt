@@ -202,6 +202,6 @@
     Agreement.
 
 
-[* SPECIAL THANKS TO THESE MODULE FOR MAKING JEBBY'S CIPHER SUITE POSSIBLE! *]
+[* SPECIAL THANKS TO THESE MODULES FOR MAKING JEBBY'S CIPHER SUITE POSSIBLE! *]
                                                                
                                                            
