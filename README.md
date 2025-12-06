@@ -48,7 +48,7 @@
   - Check `requirements.txt` - which is located at the root - for any python module requirements.
 
 ## Credits:
-- All credits are located within `main.py`.
+- All credits are located within `THIRD_PARTY_LICENCES.txt`.
 
 <br><br><br><br><br><br><br><br>
 
