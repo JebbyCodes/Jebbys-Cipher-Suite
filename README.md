@@ -42,6 +42,27 @@
 
 3) Run `main.py`.
 
+## Features:
+
+| Current Solvers:     | Has Brute Force? |
+|----------------------|--------------|
+| Affine Cipher        | ☑            |
+| Atbash Cipher        | ☐            |
+| Bacon Cipher         | ☐            |
+| Caeser Cipher        | ☑            |
+| Hex / Oct / Bin      | ☐            |
+| Playfair Cipher      | ☐            |
+| Transposition Cipher | ☐            |
+| Vigenere Cipher      | ☑            |
+| Substitution Cipher  | ☑            |
+
+### Additional Tools:
+- Frequency Analyser
+- Verification Suite:
+    - Len check
+    - Make text lower or upper case
+- Processing indicator
+
 ## Requirements:
 - [Git](https://git-scm.com/install/) must be installed in order to clone this repository.
 - [Python](https://www.python.org/downloads/) must be installed in order to run the `.py` files of this repository.
