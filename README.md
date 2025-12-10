@@ -55,6 +55,7 @@
 | Transposition Cipher | ☐            |
 | Vigenere Cipher      | ☑            |
 | Substitution Cipher  | ☑            |
+| Beaufort Cipher      | ☑            |
 
 ### Additional Tools:
 - Frequency Analyser

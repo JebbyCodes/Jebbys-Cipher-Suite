@@ -1,7 +1,7 @@
 import os
 import sys
 import customtkinter as ctk
-from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de, playfair_de, ioc
+from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de, playfair_de, ioc, beaufort_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
 from Scripts import playfair_de
@@ -97,6 +97,9 @@ def init(Exitable=False):
         btn_vigenere = ctk.CTkButton(frame_main, text="Vigenère Cipher Solver",command=lambda: vigenere_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
         btn_vigenere._text_label.configure(wraplength = root.winfo_width())
 
+        btn_beaufort = ctk.CTkButton(frame_main, text="Beaufort Cipher Solver",command=lambda: beaufort_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
+        btn_beaufort._text_label.configure(wraplength = root.winfo_width())
+
         btn_playfair = ctk.CTkButton(frame_main, text="Playfair Cipher Solver",command=lambda: playfair_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
         btn_playfair._text_label.configure(wraplength = root.winfo_width())
 
@@ -106,11 +109,12 @@ def init(Exitable=False):
         btn_help.grid(row=0, column=0, padx=5, pady=10, sticky="ew")
         btn_credits.grid(row=0, column=1, padx=5, pady=10, sticky="ew")
 
-        btn_atbash.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
+        btn_atbash.grid(row=3, column=1, padx=5, pady=10, sticky="nsew")
         btn_vigenere.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
+        btn_beaufort.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
         btn_caeser.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
         btn_transposition.grid(row=2, column=1, padx=5, pady=10, sticky="nsew")
-        btn_hexoctbin.grid(row=3, column=0, columnspan=2, pady=10, sticky="nsew")
+        btn_hexoctbin.grid(row=3, column=0, pady=10, sticky="nsew")
         btn_bacon.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_substitution.grid(row=5, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_affine.grid(row=6, column=0, columnspan=2, pady=10, sticky="nsew")
