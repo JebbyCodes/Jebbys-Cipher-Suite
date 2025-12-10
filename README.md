@@ -59,6 +59,7 @@
 
 ### Additional Tools:
 - Frequency Analyser
+- Index of Coincidence Calculator
 - Verification Suite:
     - Len check
     - Make text lower or upper case
