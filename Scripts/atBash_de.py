@@ -1,34 +1,9 @@
-"""
-def main():
-    # add text into the string litteral below
-    text = input("$atBash_de >>> ")
-
-    def cipher(text):
-        result = ""
-
-        for i in range(len(text)):
-            char = text[i]
-            if char not in alpha:
-                continue
-            else:
-                index1 = alpha.index(char)
-                alpha.reverse()
-                result += alpha[index1]
-
-
-        return result
-
-    alpha = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-
-
-    print(cipher(text).upper())
-"""
-    
+   
 import os
 import customtkinter as ctk
 import tkinter as tk
 import threading
+import configparser
 
 def main():
     pass
@@ -39,6 +14,8 @@ def main():
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
     state = {"decipher_running": False}
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("AtBash Cipher Solver")
@@ -105,6 +82,18 @@ def main():
         command=start_decipher
     )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
+
+
+    def on_enter():
+        start_decipher()
+        return "break"
+    
+    def on_shift_enter():
+        pass
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_cipher.bind("<Return>", lambda event: on_enter())
+        textbox_cipher.bind("<Shift-Return>", lambda event: on_shift_enter())
 
     # -- END cipher processing END -- #
 

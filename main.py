@@ -1,6 +1,10 @@
+from logging import config
 import os
 import sys
 import customtkinter as ctk
+import tkinter as tk
+import configparser
+import shutil
 from Scripts import atBash_de, caeser_cipher_de, hex_oct_bin_de, bacon_de, affine_de, verify, frequency_analyser, vigenere_de, transposition_de, playfair_de, ioc, beaufort_de
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts", "substitution"))
@@ -12,6 +16,12 @@ VERSION = "1.0"
 # Get root directory
 rootdir = os.path.dirname(__file__)
 credits_filler = "\n********************************************************\n\n"
+CONFIG = configparser.ConfigParser()
+
+if not os.path.exists("config.cfg"):
+    shutil.copy("config.default.cfg", "config.cfg")
+
+CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
 root = ctk.CTk()
 root.title("Jebby's Cipher Suite")
@@ -52,6 +62,52 @@ def credits():
     text_credits.configure(state="disabled")
     
     init(True)
+
+def settings():
+    clear()
+
+    frame_settings = ctk.CTkFrame(root)
+    frame_settings.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    frame_settings.grid_columnconfigure(0, weight=1)
+
+    #Settings#
+    btn_help = ctk.CTkButton(frame_settings, text="Help", command=help, width=100, height=25)
+    btn_help.grid(row=0, column=0, padx=5, pady=10)
+
+    label_settings = ctk.CTkLabel(frame_settings, text="Settings:", font=ctk.CTkFont(size=20, weight="bold"))
+    label_settings.grid(row=1, column=0, padx=5, pady=10)
+
+    # Quick Enter Setting #
+    def QUICK_ENTER():
+        if "SETTINGS" not in CONFIG:
+            CONFIG.add_section("SETTINGS")
+
+        CONFIG["SETTINGS"]["QUICK_ENTER"] = "ON" if var_QUICK_ENTER.get() else "OFF"
+
+        with open(os.path.join(rootdir, "config.cfg"), "w") as f:
+            CONFIG.write(f)
+
+    var_QUICK_ENTER = ctk.BooleanVar()
+
+    switch_QUICK_ENTER = ctk.CTkSwitch(
+        frame_settings,
+        text="Quick Enter",
+        variable=var_QUICK_ENTER,
+        command=QUICK_ENTER
+    )
+    switch_QUICK_ENTER.grid(row=2, column=0, padx=5, pady=10)
+
+
+
+    def sync_settings():
+        CONFIG.read(os.path.join(rootdir, "config.cfg"))
+
+        enabled = CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False)
+        var_QUICK_ENTER.set(enabled)
+    sync_settings()
+
+    init(True)
+
     
 
 # Init Function (to main) #
@@ -71,9 +127,10 @@ def init(Exitable=False):
             frame_main.grid_rowconfigure(i, weight=1)
 
         # Main Buttons #
-        btn_help = ctk.CTkButton(frame_main, text="Help", command=help, width=50, height=25)
 
         btn_credits = ctk.CTkButton(frame_main, text="Credits", command=credits, width=50, height=25)
+
+        btn_settings = ctk.CTkButton(frame_main, text="Settings", command=settings, width=50, height=25)
 
         btn_atbash = ctk.CTkButton(frame_main, text="AtBash Solver", command=lambda: atBash_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
@@ -106,8 +163,8 @@ def init(Exitable=False):
         btn_verify = ctk.CTkButton(frame_main, text="Verify", command=lambda: verify.main(), width=200, height=100, fg_color="#3EC385", hover_color="#29845D", font=ctk.CTkFont(size=16, weight="bold"))
         
         # Main Pack #
-        btn_help.grid(row=0, column=0, padx=5, pady=10, sticky="ew")
         btn_credits.grid(row=0, column=1, padx=5, pady=10, sticky="ew")
+        btn_settings.grid(row=0, column=0, padx=5, pady=10, sticky="ew")
 
         btn_atbash.grid(row=3, column=1, padx=5, pady=10, sticky="nsew")
         btn_vigenere.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")

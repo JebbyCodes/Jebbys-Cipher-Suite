@@ -10,6 +10,7 @@ import tkinter as tk
 from wordfreq import top_n_list
 from wordfreq import tokenize
 import threading
+import configparser
 
 def main():
 
@@ -19,6 +20,8 @@ def main():
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
     state = {"decipher_running": False}
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("Affine Cipher Solver")
@@ -202,6 +205,19 @@ def main():
     label_bruteforce.grid(row=2, column=0, pady=(10), columnspan=2)
     textbox_bruteforce = ctk.CTkTextbox(textbox_frame, font=ctk.CTkFont(size=20), height=10, width=100)
     textbox_bruteforce.grid(row=3, column=0, pady=(10,40), columnspan=2)
+
+    def on_enter():
+        if textbox_bruteforce.get("1.0", ctk.END).strip().isdigit():
+            start_decipher()
+        else:
+            textbox_processing.configure(state="normal")
+            textbox_processing.delete("1.0", "end")
+            textbox_processing.insert("1.0", "ERROR: NON-INTEGER VALUE\n")
+            textbox_processing.configure(state="disabled")
+        return "break"
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_bruteforce.bind("<Return>", lambda event: on_enter())
 
 
     

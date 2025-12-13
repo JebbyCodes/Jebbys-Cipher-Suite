@@ -3,6 +3,8 @@ import os
 import customtkinter as ctk
 import tkinter as tk
 from wordfreq import top_n_list
+import configparser
+
 def main():
 
     # Constants #
@@ -10,6 +12,8 @@ def main():
     # Get root directory
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("Hex/Oct/Bin Convertor")
@@ -19,10 +23,11 @@ def main():
     root.grid_columnconfigure(0, weight=1)
 
     def decipher():
-        commonwords = top_n_list('en', 50000000000)
+        #print("test")
+        commonwords = top_n_list('en', 500000)
 
         freq = 0
-        oldFreq = 0
+        oldFreq = -1          # allow zero-score results
         #  Hex / Bin / Octo
         # works by converting value in denary then into ascii
 
@@ -97,6 +102,17 @@ def main():
 
     btn_cipher_process = ctk.CTkButton(textbox_frame, text="Convert Hex/Oct/Bin", command=decipher)
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
+
+    def on_enter():
+        decipher()
+        return "break"
+    
+    def on_shift_enter():
+        pass
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_cipher.bind("<Return>", lambda event: on_enter())
+        textbox_cipher.bind("<Shift-Return>", lambda event: on_shift_enter())
 
     # -- END cipher processing END -- #
 

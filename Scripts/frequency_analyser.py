@@ -7,6 +7,7 @@ import customtkinter as ctk
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import configparser
 
 def main():
     pass
@@ -17,6 +18,8 @@ def main():
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
     state = {"decipher_running": False}
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("Frequency Analyser")
@@ -117,6 +120,16 @@ def main():
     )
     btn_cipher_process.grid(row=2, column=0, pady=10, columnspan=2)
 
+    def on_enter():
+        decipher()
+        return "break"
+    
+    def on_shift_enter():
+        pass
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_cipher.bind("<Return>", lambda event: on_enter())
+        textbox_cipher.bind("<Shift-Return>", lambda event: on_shift_enter())
 
     def on_closing():
         

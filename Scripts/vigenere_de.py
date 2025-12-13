@@ -3,6 +3,7 @@ import os
 import customtkinter as ctk
 import tkinter as tk
 import threading
+import configparser
 
 def main():
     from wordfreq import top_n_list, tokenize
@@ -14,6 +15,8 @@ def main():
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
     state = {"decipher_running": False, "isKey": False}
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("Vigenere Cipher Solver")
@@ -146,7 +149,15 @@ def main():
     btn_cipher_process.grid(row=2, column=0, pady=10)
 
     # -- key processing -- #
+
+    def on_enter():
+        start_decipher()
+        return "break"
+
     textbox_key = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False, height=30, width=200)
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_key.bind("<Return>", lambda event: on_enter())
 
     def setKey():
         if switch_key_var.get() == "on":

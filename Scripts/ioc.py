@@ -1,6 +1,7 @@
 
 import os
 import customtkinter as ctk
+import configparser
 
 
 def main():
@@ -11,6 +12,8 @@ def main():
     rootdir = os.path.dirname(os.path.dirname(__file__))
     credits_filler = "\n********************************************************\n\n"
     state = {"decipher_running": False}
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(os.path.join(rootdir, "config.cfg"))
 
     root = ctk.CTk()
     root.title("Index of Coincidence Calculator")
@@ -65,6 +68,17 @@ def main():
         command=decipher
     )
     btn_input_process.grid(row=2, column=0, pady=10, columnspan=2)
+
+    def on_enter():
+        decipher()
+        return "break"
+    
+    def on_shift_enter():
+        pass
+
+    if CONFIG.getboolean("SETTINGS", "QUICK_ENTER", fallback=False):
+        textbox_input.bind("<Return>", lambda event: on_enter())
+        textbox_input.bind("<Shift-Return>", lambda event: on_shift_enter())
 
 
     textbox_output = ctk.CTkTextbox(textbox_frame, font=("Courier New", 12), activate_scrollbars=False)
