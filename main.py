@@ -53,7 +53,7 @@ def credits():
     #Credits#
     text_credits = ctk.CTkTextbox(root, wrap="word")
     
-    with open(os.path.join(rootdir, "THIRD_PARTY_LICENCES.txt"), "r") as f:
+    with open(os.path.join(rootdir, "THIRD_PARTY_LICENCES.txt"), "r", encoding="utf-8") as f:
         credits_raw = f.read()
 
     text_credits.insert("1.0", credits_raw)
