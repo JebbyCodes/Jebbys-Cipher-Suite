@@ -128,9 +128,9 @@ def init(Exitable=False):
 
         # Main Buttons #
 
-        btn_credits = ctk.CTkButton(frame_main, text="Credits", command=credits, width=50, height=25)
+        btn_credits = ctk.CTkButton(frame_main, text="Credits", command=credits, width=50, height=25, fg_color="#5986A1", hover_color="#4A6F86")
 
-        btn_settings = ctk.CTkButton(frame_main, text="Settings", command=settings, width=50, height=25)
+        btn_settings = ctk.CTkButton(frame_main, text="Settings", command=settings, width=50, height=25, fg_color="#5986A1", hover_color="#4A6F86")
 
         btn_atbash = ctk.CTkButton(frame_main, text="AtBash Solver", command=lambda: atBash_de.main(), width=200, height=50, font=ctk.CTkFont(weight="bold"))
 
@@ -171,7 +171,7 @@ def init(Exitable=False):
         btn_beaufort.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
         btn_caeser.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
         btn_transposition.grid(row=2, column=1, padx=5, pady=10, sticky="nsew")
-        btn_hexoctbin.grid(row=3, column=0, pady=10, sticky="nsew")
+        btn_hexoctbin.grid(row=3, column=0, padx=5, pady=10, sticky="nsew")
         btn_bacon.grid(row=4, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_substitution.grid(row=5, column=0, columnspan=2, pady=10, sticky="nsew")
         btn_affine.grid(row=6, column=0, columnspan=2, pady=10, sticky="nsew")
