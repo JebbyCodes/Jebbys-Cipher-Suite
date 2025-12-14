@@ -13,4 +13,8 @@
 - Thanks to Gisby's spaghetti code - we landed at the brilliant and disgusting key of `MOCAPRQLTSBYNEDWVUZXHGFKI`
     - It made an *even more legible* output, but you know, it cannot be accepted :)
 
+# SLEUTHING
+- After having made a post on the forums - it turns out that we aren't the only ones who had the same pipeline!!!!
+- Digraph matching doesn't seem to help either .....
+
 
