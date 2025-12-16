@@ -6,11 +6,6 @@
          height="250" alt="Jebby's Cipher Suite">
 </div>
 
-<!-- Once made public: banner: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg 
-                       favicon: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/favicon.ico
-                       signature: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/Harrys-signature-reversed.png
--->
-
 <p align="center">
   A suite of Python files created for the 
   <a href="https://www.cipherchallenge.org/" target="_blank">
