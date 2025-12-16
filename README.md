@@ -76,8 +76,9 @@
 
 <br><br><br><br><br><br><br><br>
 
-<p align="right">
-  <img src=https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/Harrys-signature-reversed.png
-     height=40 alt="Harry's Signature">
-</p>
+<div align="right">
+    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/main/res/Harrys-signature-reversed.png"
+         height="40" alt="Harry's Signature">
+</div>
+
 
