@@ -1,7 +1,7 @@
 <p align="center">
-    <img src="https://iili.io/KLv4C8B.png"
+    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/favicon.ico"
         height="48" alt="Harry's Hat">
-    <img src="https://iili.io/KLv8nKN.md.png"
+    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg"
         height="250" alt="Jebby's Cipher Suite">
 </p>
 
@@ -76,7 +76,7 @@
 <br><br><br><br><br><br><br><br>
 
 <p align="right">
-  <img src=https://iili.io/KLvb87a.md.png
+  <img src=https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/Harrys-signature-reversed.png
      height=40 alt="Harry's Signature">
 </p>
 
