@@ -1,9 +1,10 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/favicon.ico"
-        height="48" alt="Harry's Hat">
-    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg"
-        height="250" alt="Jebby's Cipher Suite">
-</p>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/main/res/favicon.ico"
+         height="48" alt="Harry's Hat">
+    <br>
+    <img src="https://github.com/JebbyCodes/Jebbys-Cipher-Suite/blob/main/res/banner.svg?raw=true"
+         height="250" alt="Jebby's Cipher Suite">
+</div>
 
 <!-- Once made public: banner: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/banner.svg 
                        favicon: https://raw.githubusercontent.com/JebbyCodes/Jebbys-Cipher-Suite/res/favicon.ico
